@@ -1,45 +1,376 @@
-<html lang="en"><head><meta charset="UTF-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1"></meta><link rel="stylesheet" href="./style.css"></link><link rel="icon" href="./favicon.svg"></link><link rel="mask-icon" href="./favicon.svg" color="#000000"></link><link rel="prefetch" href=".//declarations/declaration-data.bmp" as="image"></link><title>Provenance</title><script defer="true" src="./mathjax-config.js"></script><script defer="true" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="true" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script>const SITE_ROOT="./";</script><script>const MODULE_NAME="Provenance";</script><script type="module" src="./jump-src.js"></script><script type="module" src="./search.js"></script><script type="module" src="./expand-nav.js"></script><script type="module" src="./how-about.js"></script><script type="module" src="./instances.js"></script><script type="module" src="./importedBy.js"></script></head><body><input id="nav_toggle" type="checkbox"></input><header><h1><label for="nav_toggle"></label><span>Documentation</span></h1><h2 class="header_filename break_within"><span class="name">Provenance</span></h2><form id="search_form"><input type="text" name="q" autocomplete="off"></input>&#32;<button id="search_button" onclick="javascript: form.action='./search.html';">Search</button></form></header><nav class="internal_nav"><p><a href="#top">return to top</a></p><p class="gh_nav_link"><a href="https://github.com/AnonymousProvenance/lean/blob/fdee2b700a67ce3dd8bd007b5fe12f7f76d5272e/Provenance.lean">source</a></p><div class="imports"><details><summary>Imports</summary><ul><li><a href="./Init.html">Init</a></li><li><a href="./Provenance/Having.html">Provenance.Having</a></li><li><a href="./Provenance/HavingProbability.html">Provenance.HavingProbability</a></li><li><a href="./Provenance/Probability.html">Provenance.Probability</a></li><li><a href="./Provenance/SemiringWithMonus.html">Provenance.SemiringWithMonus</a></li><li><a href="./Provenance/Algorithms/CompOp.html">Provenance.Algorithms.CompOp</a></li><li><a href="./Provenance/Algorithms/CountEnum.html">Provenance.Algorithms.CountEnum</a></li><li><a href="./Provenance/Algorithms/SumDP.html">Provenance.Algorithms.SumDP</a></li><li><a href="./Provenance/Semirings/Bool.html">Provenance.Semirings.Bool</a></li><li><a href="./Provenance/Semirings/BoolFunc.html">Provenance.Semirings.BoolFunc</a></li><li><a href="./Provenance/Semirings/How.html">Provenance.Semirings.How</a></li><li><a href="./Provenance/Semirings/IntervalUnion.html">Provenance.Semirings.IntervalUnion</a></li><li><a href="./Provenance/Semirings/Lukasiewicz.html">Provenance.Semirings.Lukasiewicz</a></li><li><a href="./Provenance/Semirings/MinMax.html">Provenance.Semirings.MinMax</a></li><li><a href="./Provenance/Semirings/Nat.html">Provenance.Semirings.Nat</a></li><li><a href="./Provenance/Semirings/Tropical.html">Provenance.Semirings.Tropical</a></li><li><a href="./Provenance/Semirings/Viterbi.html">Provenance.Semirings.Viterbi</a></li><li><a href="./Provenance/Semirings/Which.html">Provenance.Semirings.Which</a></li><li><a href="./Provenance/Semirings/Why.html">Provenance.Semirings.Why</a></li></ul></details><details><summary>Imported by</summary><ul id="imported-by-Provenance" class="imported-by-list"></ul></details></div></nav><main>
-<div class="mod_doc"><p>This Lean 4 library provides formal definitions and proofs relevant for
-provenance in databases, following the semiring framework of
+<html lang="en"><head><meta charset="UTF-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1"></meta><link rel="stylesheet" href="./style.css"></link><link rel="icon" href="./favicon.svg"></link><link rel="mask-icon" href="./favicon.svg" color="#000000"></link><link rel="prefetch" href=".//declarations/declaration-data.bmp" as="image"></link><title>Provenance</title><script defer="true" src="./mathjax-config.js"></script><script defer="true" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="true" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script>const SITE_ROOT="./";</script><script>const MODULE_NAME="Provenance";</script><script type="module" src="./jump-src.js"></script><script type="module" src="./search.js"></script><script type="module" src="./expand-nav.js"></script><script type="module" src="./how-about.js"></script><script type="module" src="./instances.js"></script><script type="module" src="./importedBy.js"></script></head><body><input id="nav_toggle" type="checkbox"></input><header><h1><label for="nav_toggle"></label><span>Documentation</span></h1><h2 class="header_filename break_within"><span class="name">Provenance</span></h2><form id="search_form"><input type="text" name="q" autocomplete="off"></input>&#32;<button id="search_button" onclick="javascript: form.action='./search.html';">Search</button></form></header><nav class="internal_nav"><p><a href="#top">return to top</a></p><p class="gh_nav_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance.lean">source</a></p><div class="imports"><details><summary>Imports</summary><ul><li><a href="./Init.html">Init</a></li><li><a href="./Provenance/AggQuery.html">Provenance.AggQuery</a></li><li><a href="./Provenance/AggQueryAdequacy.html">Provenance.AggQueryAdequacy</a></li><li><a href="./Provenance/AggQueryBridges.html">Provenance.AggQueryBridges</a></li><li><a href="./Provenance/AggQueryClosure.html">Provenance.AggQueryClosure</a></li><li><a href="./Provenance/AggQueryEmbedding.html">Provenance.AggQueryEmbedding</a></li><li><a href="./Provenance/AggQueryGroupRewriting.html">Provenance.AggQueryGroupRewriting</a></li><li><a href="./Provenance/AggQueryHavingRewriting.html">Provenance.AggQueryHavingRewriting</a></li><li><a href="./Provenance/AggQueryHom.html">Provenance.AggQueryHom</a></li><li><a href="./Provenance/AggQueryProbability.html">Provenance.AggQueryProbability</a></li><li><a href="./Provenance/AggQueryRewriting.html">Provenance.AggQueryRewriting</a></li><li><a href="./Provenance/AggValue.html">Provenance.AggValue</a></li><li><a href="./Provenance/AggValueCongr.html">Provenance.AggValueCongr</a></li><li><a href="./Provenance/Circuit.html">Provenance.Circuit</a></li><li><a href="./Provenance/Having.html">Provenance.Having</a></li><li><a href="./Provenance/HavingComplexity.html">Provenance.HavingComplexity</a></li><li><a href="./Provenance/HavingJoinCompositional.html">Provenance.HavingJoinCompositional</a></li><li><a href="./Provenance/HavingMinMax.html">Provenance.HavingMinMax</a></li><li><a href="./Provenance/HavingProbability.html">Provenance.HavingProbability</a></li><li><a href="./Provenance/HavingQueryCorrectness.html">Provenance.HavingQueryCorrectness</a></li><li><a href="./Provenance/HavingQueryCounterexamples.html">Provenance.HavingQueryCounterexamples</a></li><li><a href="./Provenance/HavingSemantics.html">Provenance.HavingSemantics</a></li><li><a href="./Provenance/Probability.html">Provenance.Probability</a></li><li><a href="./Provenance/QueryAdequacy.html">Provenance.QueryAdequacy</a></li><li><a href="./Provenance/QueryAnnotatedDatabase.html">Provenance.QueryAnnotatedDatabase</a></li><li><a href="./Provenance/QueryAnnotatedDatabaseHom.html">Provenance.QueryAnnotatedDatabaseHom</a></li><li><a href="./Provenance/QueryToAgg.html">Provenance.QueryToAgg</a></li><li><a href="./Provenance/Algorithms/CountEnum.html">Provenance.Algorithms.CountEnum</a></li><li><a href="./Provenance/Algorithms/SumDP.html">Provenance.Algorithms.SumDP</a></li><li><a href="./Provenance/Semirings/Bool.html">Provenance.Semirings.Bool</a></li><li><a href="./Provenance/Semirings/BoolFunc.html">Provenance.Semirings.BoolFunc</a></li><li><a href="./Provenance/Semirings/ChainFive.html">Provenance.Semirings.ChainFive</a></li><li><a href="./Provenance/Semirings/How.html">Provenance.Semirings.How</a></li><li><a href="./Provenance/Semirings/IntervalUnion.html">Provenance.Semirings.IntervalUnion</a></li><li><a href="./Provenance/Semirings/Lukasiewicz.html">Provenance.Semirings.Lukasiewicz</a></li><li><a href="./Provenance/Semirings/MinMax.html">Provenance.Semirings.MinMax</a></li><li><a href="./Provenance/Semirings/Nat.html">Provenance.Semirings.Nat</a></li><li><a href="./Provenance/Semirings/Tropical.html">Provenance.Semirings.Tropical</a></li><li><a href="./Provenance/Semirings/Viterbi.html">Provenance.Semirings.Viterbi</a></li><li><a href="./Provenance/Semirings/Which.html">Provenance.Semirings.Which</a></li><li><a href="./Provenance/Semirings/Why.html">Provenance.Semirings.Why</a></li></ul></details><details><summary>Imported by</summary><ul id="imported-by-Provenance" class="imported-by-list"></ul></details></div></nav><main>
+<div class="mod_doc"><h1 id="Provenance-in-databases" class="markdown-heading">Provenance in databases <a class="hover-link" href="#Provenance-in-databases">#</a></h1><p>This Lean 4 library provides formal definitions and proofs relevant for <em>provenance in
+databases</em>, following the semiring framework of
 <a href="./references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
 Provenance semirings.
 In Leonid Libkin, editor, Proceedings of the Twenty-Sixth ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems, June 11-13, 2007, Beijing, China, 31–40. ACM, 2007.
 doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_0">Green, Karvounarakis &amp; Tannen</a> and
-[Green &amp; Tannen][green2017provenance].</p><h2 id="Contents" class="markdown-heading">Contents <a class="hover-link" href="#Contents">#</a></h2><p><strong>Core theory</strong></p><ul><li><code><a href="./Provenance/SemiringWithMonus.html">Provenance.SemiringWithMonus</a></code> – definition of a <em>semiring with monus</em>
-(m-semiring), the algebraic structure underlying annotated database
-semantics, together with general theorems about it.</li><li><code><a href="./Provenance/Having.html">Provenance.Having</a></code> – algebraic identities behind <code>HAVING (count)</code>
-aggregate provenance: include/exclude recurrences for the JOIN and
-possible-world expressions and the upward-expansion bound.</li><li><code><a href="./Provenance/Probability.html">Provenance.Probability</a></code> – intensional probability semantics for
-<code><a href="./Provenance/Semirings/BoolFunc.html#BoolFunc">BoolFunc</a> X</code>-annotated data: probability distribution over Boolean
-valuations, probability of a Boolean function, and the independence
-lemma <code>Pr(f * g) = Pr(f) * Pr(g)</code> for <code>f</code>, <code>g</code> with disjoint variable
-supports.</li><li><code><a href="./Provenance/HavingProbability.html">Provenance.HavingProbability</a></code> – probability identities for evaluating
-<code>HAVING</code>-style aggregate comparisons under contributor independence:
-the MAX / MIN factorisation formulas (<code>funcProb_maxLeOnNonempty</code> /
-<code>funcProb_minGeOnNonempty</code>) and the COUNT / SUM Poisson-binomial-style
-recurrences (<code>countMass_insert_zero</code> / <code>countMass_insert_succ</code> /
-<code>sumMass_insert_of_le</code> / <code>sumMass_insert_of_lt</code>).</li></ul><p><strong>Algorithms</strong></p><ul><li><code><a href="./Provenance/Algorithms/CompOp.html">Provenance.Algorithms.CompOp</a></code> – shared comparison-operator type used
-by the HAVING enumeration algorithms.</li><li><code><a href="./Provenance/Algorithms/CountEnum.html">Provenance.Algorithms.CountEnum</a></code> – enumeration of valid possible
-worlds for <code>HAVING count op C</code> predicates: definitions of
-<code>combinations</code>, <code>addExact</code>, and <code>countEnum</code>, together with the
-correctness theorem <code>countEnum_correct</code>.</li><li><code><a href="./Provenance/Algorithms/SumDP.html">Provenance.Algorithms.SumDP</a></code> – subset-sum enumeration of valid
-possible worlds for <code>HAVING sum(t) op C</code> predicates: definition of
-<code>sumExact</code> and <code>sumDP</code>, together with the correctness theorem
-<code>sumDP_correct</code>.</li></ul><p><strong>Concrete m-semirings</strong> (<code>Provenance.Semirings.*</code>)</p><ul><li><code><a href="./Provenance/Semirings/Bool.html">Provenance.Semirings.Bool</a></code> – the Boolean m-semiring <code>𝔹</code>.</li><li><code><a href="./Provenance/Semirings/BoolFunc.html">Provenance.Semirings.BoolFunc</a></code> – the Boolean-function m-semiring <code>𝔹[X]</code>.</li><li><code><a href="./Provenance/Semirings/Why.html">Provenance.Semirings.Why</a></code> – the Why[X] m-semiring (sets of witness sets).</li><li><code><a href="./Provenance/Semirings/Which.html">Provenance.Semirings.Which</a></code> – the Which[X] m-semiring (lineage / Lin[X]).</li><li><code><a href="./Provenance/Semirings/How.html">Provenance.Semirings.How</a></code> – the ℕ[X] m-semiring of multivariate
-polynomials; the universal provenance semiring.</li><li><code><a href="./Provenance/Semirings/Nat.html">Provenance.Semirings.Nat</a></code> – the counting m-semiring <code>ℕ</code>.</li><li><code><a href="./Provenance/Semirings/Tropical.html">Provenance.Semirings.Tropical</a></code> – the tropical m-semiring (min-plus)
-over <code>ℕ ∪ {∞}</code>, <code>ℚ ∪ {∞}</code>, or <code>ℝ ∪ {∞}</code>; the <code>ℝ</code> instance is also used
-as a counterexample showing that the absorptive hypothesis of
-<code><a href="./Provenance/Having.html#Having.F_eq_S">Having.F_eq_S</a></code> is genuinely required (idempotent + <code>⊗</code>-over-<code>⊖</code>
-distributive is not enough).</li><li><code><a href="./Provenance/Semirings/Viterbi.html">Provenance.Semirings.Viterbi</a></code> – the Viterbi m-semiring (max-times) over
-<code>[0,1]</code>.</li><li><code><a href="./Provenance/Semirings/MinMax.html">Provenance.Semirings.MinMax</a></code> – the min-max semiring over any bounded
-linear order (security / access-control semiring and dual fuzzy
-semiring).</li><li><code><a href="./Provenance/Semirings/Lukasiewicz.html">Provenance.Semirings.Lukasiewicz</a></code> – the Łukasiewicz (fuzzy logic)
-m-semiring over <code>ℚ ∩ [0,1]</code>.</li><li><code><a href="./Provenance/Semirings/IntervalUnion.html">Provenance.Semirings.IntervalUnion</a></code> – finite unions of intervals over a
-dense linear order, used for temporal databases.</li></ul><h2 id="References" class="markdown-heading">References <a class="hover-link" href="#References">#</a></h2><ul><li><a href="./references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
+<a href="./references.html#ref_green2017provenance" title="Todd J. Green, Val Tannen.
+The Semiring Framework for Database Provenance.
+In Emanuel Sallinger, Jan Van den Bussche, Floris Geerts, editors, Proceedings of the 36th ACM SIGMOD-SIGACT-SIGAI Symposium on Principles of Database Systems, PODS 2017, Chicago, IL, USA, May 14-19, 2017, 93–99. ACM, 2017.
+doi:10.1145/3034786.3056125, URL: https://doi.org/10.1145/3034786.3056125." id="_backref_1">Green &amp; Tannen</a>.</p><p>The annotated relational algebra formalized here, with difference and
+aggregation, and its provenance-aware query rewriting are those of
+<a href="./references.html#ref_sen2026provsql" title="Aryak Sen, Silviu Maniu, Pierre Senellart.
+ProvSQL: A General System for Keeping Track of the Provenance and Probability of Data.
+In Proc. IEEE 42nd International Conference on Data Engineering (ICDE), Montréal, Canada, May 2026. 2026.
+Also arXiv abs/2504.12058.
+URL: https://arxiv.org/abs/2504.12058." id="_backref_2">Sen et al.</a>; the general (kind-indexed) framework and the
+<code>HAVING</code> results extend them to aggregate comparisons.</p><h2 id="Contents" class="markdown-heading">Contents <a class="hover-link" href="#Contents">#</a></h2><p><strong>Core theory</strong></p><ul><li><code><a href="./Provenance/SemiringWithMonus.html">Provenance.SemiringWithMonus</a></code> – definition of a <em>semiring with monus</em> (m-semiring),
+the algebraic structure underlying annotated database semantics, together with general
+theorems about it</li><li><code><a href="./Provenance/Database.html">Provenance.Database</a></code> – tuples, relations, and plain databases</li><li><code><a href="./Provenance/Query.html">Provenance.Query</a></code> – relational algebra (select, project, join, union, difference…)</li><li><code><a href="./Provenance/AnnotatedDatabase.html">Provenance.AnnotatedDatabase</a></code> – databases annotated with values in an m-semiring <code>K</code></li><li><code><a href="./Provenance/QueryAnnotatedDatabase.html">Provenance.QueryAnnotatedDatabase</a></code> – semantics of relational algebra over annotated
+databases via m-semiring operations</li><li><code><a href="./Provenance/QueryAnnotatedDatabaseHom.html">Provenance.QueryAnnotatedDatabaseHom</a></code> – evaluation commutes with m-semiring
+homomorphisms (<a href="./references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
 Provenance semirings.
 In Leonid Libkin, editor, Proceedings of the Twenty-Sixth ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems, June 11-13, 2007, Beijing, China, 31–40. ACM, 2007.
-doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_1">Green, Karvounarakis &amp; Tannen, <em>Provenance Semirings</em></a></li><li><a href="./references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
+doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_3">Green, Karvounarakis &amp; Tannen</a>,
+Proposition 3.5; <a href="./references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
 On database query languages for K-relations.
 J. Appl. Log., 8(2):173–185, 2010.
-doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_2">Geerts &amp; Poggi, <em>On database query languages for K-relations</em></a></li><li>[Green &amp; Tannen, <em>The Semiring Framework for Database Provenance</em>][green2017provenance]</li></ul></div></main>
+doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_4">Geerts &amp; Poggi</a>, Proposition 1)</li><li><code><a href="./Provenance/QueryAdequacy.html">Provenance.QueryAdequacy</a></code> – data-part adequacy of the annotated semantics:
+forgetting annotations turns annotated evaluation into plain evaluation of
+the difference-stripped query, exactly on the positive fragment (the
+annotation-generic analogue of the <code>ℕ</code>-adequacy theorem of
+<a href="./references.html#ref_benzaken2021coq" title="Véronique Benzaken, Sarah Cohen-Boulakia, Evelyne Contejean, Chantal Keller, Rébecca Zucchini.
+A Coq formalization of data provenance.
+In Catalin Hritcu, Andrei Popescu, editors, CPP '21: 10th ACM SIGPLAN International Conference on Certified Programs and Proofs, Virtual Event, Denmark, January 17-19, 2021, 152–162. ACM, 2021.
+doi:10.1145/3437992.3439920, URL: https://doi.org/10.1145/3437992.3439920." id="_backref_5">Benzaken, Cohen-Boulakia, Contejean, Keller &amp; Zucchini</a>)
+and as a sub-multiset inclusion in general
+<strong>The general framework</strong> (primary)</li></ul><p>The kind-indexed general syntax is the library's primary query
+framework. Its three column kinds – regular values, aggregate tokens,
+provenance values – mirror the regular, aggregate-token and <code>uuid</code>
+column types of a rewriting-based system such as ProvSQL, so the scope
+restrictions on aggregate results (no deduplication, difference or
+re-grouping over them) are static typing here, not a formalization
+convenience. The classical query layer below remains the
+proven engine several general results reuse internally.</p><ul><li><code><a href="./Provenance/AggValue.html">Provenance.AggValue</a></code> – symbolic aggregate tokens for the general (non-fused)
+HAVING semantics: <code><a href="./Provenance/AggValue.html#AggValue">AggValue</a> T K</code> packages an aggregate function with the
+≼-sorted occurrence payload of its originating group, with the
+world-faithful (<code>specialize</code>), per-world (<code>valOn</code>) and deterministic
+(<code>collapse</code>) readings, the predicate provenance of a comparison against
+the token (<code>predProv</code>, agreeing with <code>havingProv</code> on a group via
+<code>predProv_ofGroup</code>), the annotation pushforward (<code>mapAnn</code>), and lifted
+column values <code>T ⊕ <a href="./Provenance/AggValue.html#AggValue">AggValue</a> T K</code> mixing key and token columns</li><li><code><a href="./Provenance/AggValueCongr.html">Provenance.AggValueCongr</a></code> – congruence of the token readings under
+tie-block permutations of the payload: <code><a href="./Provenance/AggValueCongr.html#TiePerm">TiePerm</a></code>, the guarded analogue
+of <code><a href="./Init/Data/List/Basic.html#List.Perm">List.Perm</a></code> whose swaps only exchange adjacent elements with equal
+sort keys (<code><a href="./Provenance/AggValueCongr.html#tiePerm_of_perm_of_sorted">tiePerm_of_perm_of_sorted</a></code> produces one from two sorted
+permuted lists), a recursion form of the predicate provenance
+(<code><a href="./Provenance/AggValueCongr.html#AggValue.predProvAux">AggValue.predProvAux</a></code>, equal to the world-sum by
+<code><a href="./Provenance/AggValueCongr.html#AggValue.predProv_eq_predProvAux">AggValue.predProv_eq_predProvAux</a></code>), and the congruences
+(<code><a href="./Provenance/AggValueCongr.html#AggValue.predProv_congr">AggValue.predProv_congr</a></code>, <code>collapse_congr</code>, <code>annSum_congr</code>) making the
+annotation tie-break of the group sort semantically invisible</li><li><code><a href="./Provenance/AggQuery.html">Provenance.AggQuery</a></code> – the general (non-fused) HAVING semantics:
+kind-indexed queries <code><a href="./Provenance/AggQuery.html#AggQuery">AggQuery</a></code> over three column kinds – regular
+values, aggregate tokens, provenance values – enforcing the scope
+conditions
+statically (<code>Gamma</code> over all-regular inputs only, no <code>Dedup</code>/<code>Diff</code>
+over token columns, normal-form projections and selections), the
+token-building grouping <code>GammaTok</code> and provenance aggregation
+<code>ProvSum</code> of rewritten plans, the generalized selection grammar
+<code><a href="./Provenance/AggQuery.html#GenPred">GenPred</a></code> mixing regular and aggregate atoms (<code>∧ ↦ ⊗</code>, <code>∨ ↦ ⊕</code>, <code>¬</code> by
+operator complementation), and the general evaluator
+<code><a href="./Provenance/AggQuery.html#AggQuery.evaluate">AggQuery.evaluate</a></code> with factored row annotations <code><a href="./Provenance/AggQuery.html#GenAnn">GenAnn</a></code>
+implementing the replace-the-δ-factor combination rule: <code>Gamma</code> leaves
+its group-existence factor pending, an aggregate selection supersedes
+exactly the compared groups' factors with the predicate provenance, and
+projections cash the factors of dropped token columns. Also the plain
+evaluator <code><a href="./Provenance/AggQuery.html#AggQuery.evaluatePlain">AggQuery.evaluatePlain</a></code> (classical filtering, aggregates
+computed over the whole group) and the stripping <code><a href="./Provenance/AggQuery.html#AggQuery.stripAgg">AggQuery.stripAgg</a></code></li><li><code><a href="./Provenance/AggQueryAdequacy.html">Provenance.AggQueryAdequacy</a></code> – <strong>data-part adequacy of the general
+evaluator</strong>: forgetting the annotations of <code><a href="./Provenance/QueryAnnotatedDatabase.html#Query.evaluateAnnotated">Query.evaluateAnnotated</a></code> yields
+the plain evaluation of the stripped query
+(<code><a href="./Provenance/AggQueryAdequacy.html#AggQuery.evaluateAnnotated_toPlain">AggQuery.evaluateAnnotated_toPlain</a></code>), the aggregate tokens
+contributing through their deterministic <code>collapse</code> reading and the
+fused group sequence projecting onto the plain one
+(<code><a href="./Provenance/AggQueryAdequacy.html#havingGroup_map_fst">havingGroup_map_fst</a></code>)</li><li><code><a href="./Provenance/AggQueryBridges.html">Provenance.AggQueryBridges</a></code> – <strong>the fused <code>HAVING</code> site in closed
+form</strong>: <code><a href="./Provenance/AggQueryBridges.html#AggQuery.havingSite">AggQuery.havingSite</a></code> is one aggregate comparison directly above
+the grouping, and <code><a href="./Provenance/AggQueryBridges.html#AggQuery.havingSite_evaluateAnnotated">AggQuery.havingSite_evaluateAnnotated</a></code> computes it
+– one row per group key, annotated by <code><a href="./Provenance/HavingSemantics.html#Having.havingProv">Having.havingProv</a></code> – since the
+pending group factor is superseded by the token's predicate provenance
+(<code><a href="./Provenance/AggValue.html#AggValue.predProv_ofGroup">AggValue.predProv_ofGroup</a></code>) and the data part collapses to the
+whole-group aggregates. The fused site is thereby a theorem about the
+single annotated evaluator, not a semantics of its own</li><li><code><a href="./Provenance/AggQueryProbability.html">Provenance.AggQueryProbability</a></code> – <strong>the random-world commutation for
+the general evaluator</strong> over <code>𝔹[X]</code>:
+<code><a href="./Provenance/AggQueryProbability.html#AggQuery.genRandomWorld_evaluate">AggQuery.genRandomWorld_evaluate</a></code> – specializing the realized rows
+of the general annotated evaluation is the plain evaluation of the
+realized world (<code><a href="./Provenance/AggQueryProbability.html#genRandomWorld">genRandomWorld</a> v (q.evaluate d) = q.evaluatePlain (d.<a href="./Provenance/Probability.html#randomWorld">randomWorld</a> v)</code>), for arbitrary queries with
+aggregate comparisons anywhere. Built from the token-level PQE bridge
+(<code><a href="./Provenance/AggQueryProbability.html#AggValue.predProv_eval_iff">AggValue.predProv_eval_iff</a></code>), the predicate-provenance evaluation
+under existence guards (<code><a href="./Provenance/AggQueryProbability.html#GenPred.predsem_eval_iff">GenPred.predsem_eval_iff</a></code>, with <code>¬</code> handled by
+polarity), the existence-entailment extraction
+(<code><a href="./Provenance/AggQueryProbability.html#GenPred.entails_guard">GenPred.entails_guard</a></code>), the σ-aggregate row lemma
+(<code><a href="./Provenance/AggQueryProbability.html#GenPred.sel_finalize_eval_iff">GenPred.sel_finalize_eval_iff</a></code>), and the conformance and guardedness
+invariants of the evaluator (<code>evaluate_conform</code>,
+<code>evaluate_guarded</code>). As corollaries, <strong>unrestricted probabilistic
+query evaluation</strong>: <code><a href="./Provenance/AggQueryProbability.html#AggQuery.boolean_pqe">AggQuery.boolean_pqe</a></code> (the probability that a
+random world has a non-empty answer is the probability of the query's
+Boolean provenance, the <code>⊕</code>-sum of the rows' finalized annotations) and
+<code><a href="./Provenance/AggQueryProbability.html#AggQuery.tuple_pqe">AggQuery.tuple_pqe</a></code> (the marginal probability of an answer tuple, for
+all-regular outputs) – both for arbitrary queries with aggregate
+comparisons anywhere, removing the top-level restriction of the fused
+<code>booleanHaving_pqe</code></li><li><code><a href="./Provenance/AggQueryHom.html">Provenance.AggQueryHom</a></code> – hom commutation for the general evaluator,
+token and annotation layer: the finalized factored annotation
+(<code><a href="./Provenance/AggQueryHom.html#GenAnn.finalize_mapHom">GenAnn.finalize_mapHom</a></code>, through <code>map_delta</code>), the predicate
+provenance of a token comparison (<code><a href="./Provenance/AggQueryHom.html#AggValue.predProv_mapAnn">AggValue.predProv_mapAnn</a></code>) and of a
+whole generalized predicate (<code><a href="./Provenance/AggQueryHom.html#GenPred.predsem_mapAnn">GenPred.predsem_mapAnn</a></code>) commute with
+every <code><a href="./Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a></code> –
+the <code>⊕</code>/<code>⊗</code>/<code>⊖</code>/<code>δ</code>-polynomial content of “compile once, evaluate
+many”. The evaluator-level commutation
+(<code><a href="./Provenance/AggQueryHom.html#AggQuery.evaluateAnnotated_hom">AggQuery.evaluateAnnotated_hom</a></code>) holds hypothesis-free over every
+m-semiring: the guard-absorption identities licensed by <code>delta_absorb</code>
+(<code><a href="./Provenance/AggQueryHom.html#AggValue.predProv_delta_absorb">AggValue.predProv_delta_absorb</a></code>, <code><a href="./Provenance/AggQueryHom.html#GenPred.predsem_delta_absorb">GenPred.predsem_delta_absorb</a></code>)
+neutralize the supersede decisions a non-injective hom can conflate,
+the group-sequence transport (<code><a href="./Provenance/AggQueryHom.html#havingGroup_tiePerm">havingGroup_tiePerm</a></code>,
+<code><a href="./Provenance/AggQueryHom.html#ofGroup_predProv_hom">ofGroup_predProv_hom</a></code>, <code><a href="./Provenance/AggQueryHom.html#havingGroup_annSum_hom">havingGroup_annSum_hom</a></code>) neutralizes the
+<code>≼</code>-tie-break of <code>havingGroup</code>, and a row-wise simulation
+(<code><a href="./Provenance/AggQueryHom.html#GenRow.Sim">GenRow.Sim</a></code>, <code><a href="./Provenance/AggQueryHom.html#AggQuery.evaluate_hom_rel">AggQuery.evaluate_hom_rel</a></code>) carries both through
+the evaluator</li><li><code><a href="./Provenance/QueryToAgg.html">Provenance.QueryToAgg</a></code> – the embedding of the classical query
+syntax into the general evaluator: <code><a href="./Provenance/QueryToAgg.html#Query.toAgg">Query.toAgg</a></code> translates the
+non-aggregating fragment one to one over all-regular kinds, faithfully
+(<code><a href="./Provenance/QueryToAgg.html#Query.toAgg_bridge">Query.toAgg_bridge</a></code> and, at the raw row level,
+<code><a href="./Provenance/QueryToAgg.html#Query.toAgg_evaluate_eq">Query.toAgg_evaluate_eq</a></code>, via the row invariant <code><a href="./Provenance/QueryToAgg.html#GenRow.Inv">GenRow.Inv</a></code>); the
+fused <code>HAVING</code> site over an embedded subquery reads its input relation
+off the classical one (<code><a href="./Provenance/QueryToAgg.html#Query.toAggHaving_input">Query.toAggHaving_input</a></code>). The module sits
+<em>below</em> the classical <code>HAVING</code> correctness files, so those state their
+theorems over the embedded general query with no side hypothesis</li><li><code><a href="./Provenance/AggQueryEmbedding.html">Provenance.AggQueryEmbedding</a></code> – the compositional JOIN rewriting,
+stated natively on the general syntax: <code><a href="./Provenance/AggQueryEmbedding.html#GenCountHavingRewrite">GenCountHavingRewrite</a></code> replaces
+<code>HAVING COUNT(*)</code> sites – key projections of <code>σ_ψ ∘ Gamma</code>, all-regular
+and hence composable under every operator – by the embedded padded join
+query, and <code><a href="./Provenance/AggQueryEmbedding.html#GenCountHavingRewrite.evaluateGen_eq">GenCountHavingRewrite.evaluateGen_eq</a></code> proves the
+replacement preserves the general evaluator's rows verbatim; the kind
+discipline forbids deduplication, difference and re-grouping over
+aggregate values, so the expressible contexts around a site are exactly
+those a rewriting-based system admits</li><li><code><a href="./Provenance/AggQueryRewriting.html">Provenance.AggQueryRewriting</a></code> – <strong>the provenance-aware rewriting,
+natively on the general syntax</strong>: the rewritten column layout
+<code><a href="./Provenance/AggQueryRewriting.html#ColKind.rewKinds">ColKind.rewKinds</a></code> (<code>n</code> regular data columns plus one provenance
+column), the fragment predicate <code><a href="./Provenance/AggQueryRewriting.html#AggQuery.classical">AggQuery.classical</a></code>, and the rewriting
+<code><a href="./Provenance/AggQueryRewriting.html#AggQuery.rewriting">AggQuery.rewriting</a></code> mirroring the classical rules – with
+deduplication and difference expressed through the native <code>ProvSum</code>
+aggregation of provenance columns and the <code>Retag</code> cast. Correctness,
+<code><a href="./Provenance/AggQueryRewriting.html#AggQuery.rewriting_valid">AggQuery.rewriting_valid</a></code>, states that the annotated semantics
+folded into composite <code>T ⊕ K</code> tuples agrees with the plain evaluation
+of the rewritten query; it is proven by stripping to the classical
+fragment (<code><a href="./Provenance/AggQueryRewriting.html#AggQuery.strip">AggQuery.strip</a></code>, faithful by <code><a href="./Provenance/AggQueryRewriting.html#AggQuery.strip_bridge">AggQuery.strip_bridge</a></code> through
+the row invariant <code><a href="./Provenance/QueryToAgg.html#GenRow.Inv">GenRow.Inv</a></code>) and the plain-semantics agreement
+<code><a href="./Provenance/AggQueryRewriting.html#AggQuery.rewriting_plain">AggQuery.rewriting_plain</a></code> of the two rewritten queries</li><li><code><a href="./Provenance/AggQueryHavingRewriting.html">Provenance.AggQueryHavingRewriting</a></code> – <strong>the rewritten world's
+evaluator, with tokens as ordinary column values</strong>: rewritten
+queries run over rows <code><a href="./Provenance/Database.html#Tuple">Tuple</a> (GenValue (T ⊕ K) K) n</code>
+(<code><a href="./Provenance/AggQueryHavingRewriting.html#AggQuery.evaluateRew">AggQuery.evaluateRew</a></code>), where the token-building grouping <code>GammaTok</code>
+is the aggregate-token constructor (explicit annotation term, group
+guard <code>δ(⊕ occs)</code> in the <code>prov</code> output column) and the two term gates
+are interpreted by their primitives (<code><a href="./Provenance/AggQueryHavingRewriting.html#TermG.evalRew">TermG.evalRew</a></code>): <code><a href="./Provenance/AggQuery.html#TermG.cmpAgg">TermG.cmpAgg</a></code> is
+the comparison gate, read by <code><a href="./Provenance/AggValue.html#AggValue.predProv">AggValue.predProv</a></code>, and <code><a href="./Provenance/AggQuery.html#TermG.chiGate">TermG.chiGate</a></code> is
+the regular-atom indicator, read by <code><a href="./Provenance/HavingSemantics.html#Having.chi">Having.chi</a></code>. Off the token
+operators and the indicator gate the evaluator is the plain semantics
+through the <code>inl</code> embedding (<code><a href="./Provenance/AggQueryHavingRewriting.html#AggQuery.evaluateRew_plain">AggQuery.evaluateRew_plain</a></code>, under
+<code><a href="./Provenance/AggQueryHavingRewriting.html#AggQuery.noGammaTok">AggQuery.noGammaTok</a></code> and <code><a href="./Provenance/AggQueryHavingRewriting.html#AggQuery.chiFree">AggQuery.chiFree</a></code>), connecting it to the
+classical rewriting correctness – the classical rewriting stays inside
+that fragment (<code><a href="./Provenance/AggQueryHavingRewriting.html#AggQuery.rewriting_chiFree">AggQuery.rewriting_chiFree</a></code>). <code><a href="./Provenance/AggQueryHavingRewriting.html#AggQuery.rewriting_provRel">AggQuery.rewriting_provRel</a></code> reads a rewritten
+evaluation back as an annotated relation – the input the token-building
+groupings consume – and <code><a href="./Provenance/AggQueryHavingRewriting.html#Having.havingGroup_toComposite">Having.havingGroup_toComposite</a></code> transports the
+group sequence along the composite embedding; the rewriting rules built
+on top live in <code><a href="./Provenance/AggQueryGroupRewriting.html">Provenance.AggQueryGroupRewriting</a></code> and
+<code><a href="./Provenance/AggQueryClosure.html">Provenance.AggQueryClosure</a></code></li><li><code><a href="./Provenance/AggQueryGroupRewriting.html">Provenance.AggQueryGroupRewriting</a></code> – <strong>the bare-grouping rewriting</strong>, the
+general framework's counterpart of rule (R5): a <code>GROUP BY</code> whose
+aggregate columns flow onward as output values, rather than being
+consumed by a comparison gate. No new value domain is needed – the
+rewritten world already has tokens as column values – but the
+correspondence must be stated at token level, since the composite
+embedding of an annotated relation reads tokens through their
+deterministic collapse. <code><a href="./Provenance/AggQueryGroupRewriting.html#GenRow.toCompositeRow">GenRow.toCompositeRow</a></code> is the token-aware
+embedding (<code><a href="./Provenance/AggQueryGroupRewriting.html#AggValue.toComposite">AggValue.toComposite</a></code> on token columns, the finalized
+annotation appended as the provenance column), agreeing with the old
+embedding on token-free rows (<code><a href="./Provenance/AggQueryGroupRewriting.html#GenRow.toCompositeRow_of_reg">GenRow.toCompositeRow_of_reg</a></code>);
+<code><a href="./Provenance/AggQueryGroupRewriting.html#AggQuery.gammaRew">AggQuery.gammaRew</a></code> is the rewritten grouping (<code>GammaTok</code> over the
+classically rewritten subquery) and <code><a href="./Provenance/AggQueryGroupRewriting.html#AggQuery.gammaRew_valid">AggQuery.gammaRew_valid</a></code> its
+correctness, resting on the reusable
+<code><a href="./Provenance/AggQueryHavingRewriting.html#AggQuery.rewriting_provRel">AggQuery.rewriting_provRel</a></code> – the rewritten world's reading of a
+classical rewriting back as an annotated relation, and
+<code><a href="./Provenance/AggQueryGroupRewriting.html#AggValue.predProv_toComposite">AggValue.predProv_toComposite</a></code> – a transported token is read by the
+gate unchanged</li><li><code><a href="./Provenance/AggQueryClosure.html">Provenance.AggQueryClosure</a></code> – <strong>the compositional closure of the three
+base rewritings</strong> (classical blocks, <code>HAVING</code> sites, bare groupings).
+Since the base rules do not share an output shape – a bare grouping
+emits token columns – the relation <code><a href="./Provenance/AggQueryClosure.html#AggQuery.RewritesTo">AggQuery.RewritesTo</a></code> is indexed by
+the rewritten query's own kind vector and correctness
+(<code><a href="./Provenance/AggQueryClosure.html#AggQuery.rewritesTo_valid">AggQuery.rewritesTo_valid</a></code>) is stated at token level, specializing to
+the all-regular form as <code><a href="./Provenance/AggQueryClosure.html#AggQuery.rewritesTo_valid_reg">AggQuery.rewritesTo_valid_reg</a></code>. The
+uniform rewritten kind vector <code><a href="./Provenance/AggQueryClosure.html#ColKind.rewKindsOf">ColKind.rewKindsOf</a> κ</code> (source kinds plus
+the provenance column) makes casting into the rewritten world
+kind-preserving, so <code><a href="./Provenance/AggQueryClosure.html#TermG.castRew">TermG.castRew</a></code>, <code><a href="./Provenance/AggQueryClosure.html#GenPred.castRew">GenPred.castRew</a></code> and
+<code><a href="./Provenance/AggQueryClosure.html#ProjCol.castRew">ProjCol.castRew</a></code> need no all-regular hypothesis and selection,
+projection and union close over token-bearing subqueries – the
+<code>SELECT … FROM (GROUP BY …)</code> shape. The module also lifts the two
+scope restrictions of the <code>HAVING</code> site: <code><a href="./Provenance/AggQueryClosure.html#AggQuery.havingPredRew">AggQuery.havingPredRew</a></code> is
+the site <em>with its aggregates exposed</em> (keys and tokens kept as output
+columns, the gates in the provenance column – the shape of a rewritten
+plan) for an <em>arbitrary</em> predicate with an aggregate atom,
+not just a single comparison, regular atoms mixed in included.
+<code><a href="./Provenance/AggQueryClosure.html#GenPred.gateTerm">GenPred.gateTerm</a></code> translates the <code>predsem</code> algebra into a rewritten
+term (<code>∧ ↦ ⊗</code>, <code>∨ ↦ ⊕</code>, <code>¬</code> pushed to the atoms), an aggregate atom
+becoming a comparison gate and a regular one a <code><a href="./Provenance/AggQuery.html#TermG.chiGate">TermG.chiGate</a></code>
+indicator gate. Whether the group-existence guard is superseded or
+kept as a factor is decided by <code><a href="./Provenance/AggQuery.html#GenPred.entailsExistence">GenPred.entailsExistence</a></code>, in
+<code><a href="./Provenance/AggQueryClosure.html#GenPred.siteProvTerm">GenPred.siteProvTerm</a></code>: an aggregate-only predicate always supersedes
+it (<code><a href="./Provenance/AggQueryClosure.html#GenPred.aggOnly_entailsExistence">GenPred.aggOnly_entailsExistence</a></code>), one with a regular atom
+reachable in an empty group does not. Deduplication closes too, through
+<code><a href="./Provenance/AggQueryClosure.html#AggQuery.dedupRew">AggQuery.dedupRew</a></code>/<code><a href="./Provenance/AggQueryClosure.html#AggQuery.dedupRew_valid">AggQuery.dedupRew_valid</a></code>: the <code>ε</code> rule of
+<a href="./references.html#ref_sen2026provsql" title="Aryak Sen, Silviu Maniu, Pierre Senellart.
+ProvSQL: A General System for Keeping Track of the Provenance and Probability of Data.
+In Proc. IEEE 42nd International Conference on Data Engineering (ICDE), Montréal, Canada, May 2026. 2026.
+Also arXiv abs/2504.12058.
+URL: https://arxiv.org/abs/2504.12058." id="_backref_6">Sen et al.</a> (group by the data columns, <code>⊕</code>-sum the
+provenance column) proven
+against an arbitrary rewritten subquery. So does product
+(<code><a href="./Provenance/AggQueryClosure.html#AggQuery.prodRew">AggQuery.prodRew</a></code>/<code><a href="./Provenance/AggQueryClosure.html#AggQuery.prodRew_valid">AggQuery.prodRew_valid</a></code>), whose join reassembly
+uses the kind-dispatched column copy <code><a href="./Provenance/AggQueryClosure.html#ProjCol.copy">ProjCol.copy</a></code>, faithful because
+the operands' rows conform (<code><a href="./Provenance/AggQueryClosure.html#GenRow.toCompositeRow_conform">GenRow.toCompositeRow_conform</a></code> over
+<code><a href="./Provenance/AggQuery.html#AggQuery.evaluate_conform">AggQuery.evaluate_conform</a></code>). Only difference above a grouping is
+left out</li></ul><p><strong>The classical rewriting layer</strong></p><ul><li><p><code><a href="./Provenance/QueryRewriting.html">Provenance.QueryRewriting</a></code> – alternative query evaluation by rewriting plain
+queries on <code>T ⊕ K</code>; implements rules (R1)–(R4) of
+<a href="./references.html#ref_sen2026provsql" title="Aryak Sen, Silviu Maniu, Pierre Senellart.
+ProvSQL: A General System for Keeping Track of the Provenance and Probability of Data.
+In Proc. IEEE 42nd International Conference on Data Engineering (ICDE), Montréal, Canada, May 2026. 2026.
+Also arXiv abs/2504.12058.
+URL: https://arxiv.org/abs/2504.12058." id="_backref_7">Sen et al.</a> on the classical syntax, with
+correctness <code><a href="./Provenance/QueryRewriting.html#Query.rewriting_valid">Query.rewriting_valid</a></code>. Rule (R5) – aggregation – lives on the
+general syntax instead (<code><a href="./Provenance/AggQueryGroupRewriting.html">Provenance.AggQueryGroupRewriting</a></code>), where an
+aggregate output is a symbolic token rather than a quotiented K-tensor
+<strong>HAVING: algebra, possible worlds, probability, and correctness</strong></p></li><li><p><code><a href="./Provenance/Having.html">Provenance.Having</a></code> – algebraic identities behind <code>HAVING (count)</code> aggregate
+provenance: include/exclude recurrences for the JOIN and possible-world expressions,
+the upward-expansion bound, the upward-closed collapse
+(<code>upward_closed_collapse</code>, <code>collapse_to_minimal</code>), and the index-set size facts</p></li><li><p><code><a href="./Provenance/HavingSemantics.html">Provenance.HavingSemantics</a></code> – the possible-world semantics of the fused
+<code><a href="./Provenance/Query.html#Query.Having">Query.Having</a></code> operator (grouping + aggregate comparison) over annotated
+databases: group-occurrence sequences, the bridge between subsequences and
+<code><a href="./Mathlib/Data/Finset/Defs.html#Finset">Finset</a></code>-of-positions worlds (<code>seqOf_sublist</code>, <code>sublist_eq_seqOf</code>,
+<code>seqOf_injective</code>), the factored world annotation (<code>worldAnn</code>), the
+predicate provenance (<code>havingProv</code>) with
+its attachment to the query-free algebra (<code>havingProv_eq_prov</code>), and
+Boolean combinations of aggregate comparisons (<code><a href="./Provenance/HavingSemantics.html#HavingPred">HavingPred</a></code>)</p></li><li><p><code><a href="./Provenance/HavingMinMax.html">Provenance.HavingMinMax</a></code> – the <code>HAVING</code> aggregate comparisons whose validity
+is decided occurrence by occurrence: for <code>MIN</code>, <code>MAX</code> and <code>PICKFIRST</code>, and for
+all six comparison operators, the possible-world provenance of a group
+collapses, in an absorptive m-semiring, to a closed form computable by a
+single scan over the occurrences (<code>minScan_correct</code>, <code>maxScan_correct</code>,
+<code>firstScan_correct</code>), hence in polynomial time in data complexity. The
+collapse rests on the identity <code>meet_family_eq</code> for the worlds that stay
+inside a set <code>G</code> and meet a set <code>H</code></p></li><li><p><code><a href="./Provenance/Probability.html">Provenance.Probability</a></code> – intensional probabilistic query evaluation: probability
+distribution over Boolean valuations, probability of a <code><a href="./Provenance/Semirings/BoolFunc.html#BoolFunc">BoolFunc</a> X</code>, and the
+statement of Theorem 12 of <a href="./references.html#ref_sen2026provsql" title="Aryak Sen, Silviu Maniu, Pierre Senellart.
+ProvSQL: A General System for Keeping Track of the Provenance and Probability of Data.
+In Proc. IEEE 42nd International Conference on Data Engineering (ICDE), Montréal, Canada, May 2026. 2026.
+Also arXiv abs/2504.12058.
+URL: https://arxiv.org/abs/2504.12058." id="_backref_8">Sen et al.</a> reducing
+<code>Pr(t ∈ q(Î))</code> to <code>Pr(⋁_{(t,α) ∈ ⟪q⟫^Î} α)</code>; the proof is reduced to a single
+structural commutation lemma <code><a href="./Provenance/Probability.html#randomWorld_evaluateAnnotated">randomWorld_evaluateAnnotated</a></code></p></li><li><p><code><a href="./Provenance/Circuit.html">Provenance.Circuit</a></code> – Boolean circuits with structural predicates and
+two recursive bottom-up probability evaluators: the <strong>read-once</strong>
+evaluator with the inclusion-exclusion correction at OR gates
+(<code><a href="./Provenance/Circuit.html#Circuit.prob">Circuit.prob</a></code>), and the <strong>d-D</strong> evaluator with direct summation at
+OR gates under decomposability + determinism (<code><a href="./Provenance/Circuit.html#Circuit.probDD">Circuit.probDD</a></code>). Both
+evaluators are proved correct against the sum-over-valuations
+semantics (<a href="./references.html#ref_sen2026provsql" title="Aryak Sen, Silviu Maniu, Pierre Senellart.
+ProvSQL: A General System for Keeping Track of the Provenance and Probability of Data.
+In Proc. IEEE 42nd International Conference on Data Engineering (ICDE), Montréal, Canada, May 2026. 2026.
+Also arXiv abs/2504.12058.
+URL: https://arxiv.org/abs/2504.12058." id="_backref_9">Sen et al.</a>, Section V-D
+step 1).</p></li><li><p><code><a href="./Provenance/HavingProbability.html">Provenance.HavingProbability</a></code> – probability identities for evaluating
+<code>HAVING</code>-style aggregate comparisons under contributor independence:
+given pairwise-disjoint contributor variable supports (so contributors
+are independent Bernoullis with marginals <code>p i = P.funcProb (α i)</code>),
+the MAX / MIN factorization formulas for all six comparison operators
+(<code>funcProb_maxLeOnNonempty</code> / <code>funcProb_minGeOnNonempty</code> and the
+generic <code>funcProb_guardedSome</code> covering the remaining operators),
+the COUNT / SUM Poisson-binomial-style recurrences
+(<code>countMass_insert_zero</code> / <code>countMass_insert_succ</code> /
+<code>sumMass_insert_of_le</code> / <code>sumMass_insert_of_lt</code>), and the CDF assembly
+around them (<code>funcProb_count_filter</code>, empty-world mass <code>countMass_zero</code>,
+and the shorter-tail identity <code>funcProb_count_ge_eq_absent_le</code>).</p></li><li><p><code><a href="./Provenance/HavingQueryCorrectness.html">Provenance.HavingQueryCorrectness</a></code> – query-level correctness of the fused
+<code>Having</code> operator against the JOIN-based rewriting, in absorptive
+m-semirings with <code>⊗</code>-over-<code>⊖</code> distributivity: the <code>C = 1</code> case
+(<code><a href="./Provenance/HavingQueryCorrectness.html#AggQuery.havingSite_count_ge_one">AggQuery.havingSite_count_ge_one</a></code>, the fused <code>COUNT(*) ≥ 1</code> site
+equals the duplicate-eliminated key projection) and the general
+case (<code><a href="./Provenance/HavingQueryCorrectness.html#Query.joinChain_count_correct">Query.joinChain_count_correct</a></code>, the <code>C</code>-fold self-join chain with
+a lexicographic occurrence-identifier tie-break gives every key the
+<code>⊕</code>-sum of its <code>(C+1)</code>-element world monomials, the fused
+<code>COUNT(*) ≥ C + 1</code> provenance), via the extensional characterization
+<code><a href="./Provenance/HavingQueryCorrectness.html#groupByKey_eq_dedup_map">groupByKey_eq_dedup_map</a></code> of duplicate elimination and the chain algebra
+<code>chainAgg</code>/<code>esymm</code></p></li><li><p><code><a href="./Provenance/HavingJoinCompositional.html">Provenance.HavingJoinCompositional</a></code> – the JOIN rewriting upgraded from
+extensional (per-key annotation sums) to intensional, multiset-level
+equality: the padded rewriting <code><a href="./Provenance/HavingJoinCompositional.html#joinCountQueryPadded">joinCountQueryPadded</a></code> (the join query
+unioned with the <code>𝟘</code>-annotated self-difference of the key query, then
+duplicate-eliminated) evaluates to exactly one row per group key with
+the fused predicate provenance (<code><a href="./Provenance/HavingJoinCompositional.html#joinCountQueryPadded_correct">joinCountQueryPadded_correct</a></code>), which
+is precisely the key projection of the fused output (<code><a href="./Provenance/HavingJoinCompositional.html#fused_key_proj">fused_key_proj</a></code>);
+the combined <code><a href="./Provenance/HavingJoinCompositional.html#countHaving_site_rewrite">countHaving_site_rewrite</a></code> makes the substitution
+transparent to every surrounding operator – padding matters, since a
+bare “equal up to <code>𝟘</code>-rows” relation is not a congruence for enclosing
+aggregates. The compositional query-to-query form of the rewriting
+lives on the general syntax (<code><a href="./Provenance/AggQueryEmbedding.html#GenCountHavingRewrite">GenCountHavingRewrite</a></code>, in
+<code><a href="./Provenance/AggQueryEmbedding.html">Provenance.AggQueryEmbedding</a></code>)</p></li><li><p><code><a href="./Provenance/HavingQueryCounterexamples.html">Provenance.HavingQueryCounterexamples</a></code> – <code>decide</code>-checked counterexamples,
+at the level of queries evaluated on concrete annotated databases, showing
+that the HAVING / JOIN correspondence for <code>COUNT(*)</code> needs both
+absorptivity (tropical over <code>ℤ ∪ {∞}</code>) and <code>⊗</code>-over-<code>⊖</code> distributivity
+(<code><a href="./Provenance/Semirings/ChainFive.html#ChainFive">ChainFive</a></code>).</p></li></ul><p><strong>Algorithms</strong></p><ul><li><code><a href="./Provenance/Algorithms/CompOp.html">Provenance.Algorithms.CompOp</a></code> – shared comparison-operator type used by the
+HAVING enumeration algorithms</li><li><code><a href="./Provenance/Algorithms/CountEnum.html">Provenance.Algorithms.CountEnum</a></code> – enumeration of valid possible worlds for
+<code>HAVING count op C</code> predicates: definitions of <code>combinations</code>, <code>addExact</code>, and
+<code>countEnum</code>, together with the correctness theorem <code>countEnum_correct</code></li><li><code><a href="./Provenance/Algorithms/SumDP.html">Provenance.Algorithms.SumDP</a></code> – subset-sum enumeration of valid possible
+worlds for <code>HAVING sum(t) op C</code> predicates: definition of <code>sumExact</code> and
+<code>sumDP</code>, together with the correctness theorem <code>sumDP_correct</code></li></ul><p><strong>Complexity</strong></p><ul><li><code><a href="./Provenance/HavingComplexity.html">Provenance.HavingComplexity</a></code> – deciding whether <code>HAVING SUM</code> provenance over
+an <code>ℕ[X]</code>-instance is non-<code>𝟘</code> is NP-complete, already in data complexity
+(<code>havingSumNonzero_NP_complete</code>). Built on the
+<a href="https://github.com/PierreSenellart/descriptive-complexity">descriptive-complexity</a>
+library: membership is <code>Knapsack</code> cut down by one first-order sentence, and
+hardness is a padding FO reduction from <code>Knapsack</code>, hence stronger than a Karp
+reduction. The bridge to the semiring semantics is
+<code>havingSumProv_ne_zero_iff</code>, and <code>havingSumNonzeroHow_faithful</code> closes the
+loop on the other side: a concrete group – a list of aggregate values and a
+constant – is encoded with its size bounds discharged, so the statement is
+about values written in <em>binary</em>; <code>exists_concreteNonemptySubsetSum_iff</code>
+closes it in the decoding direction, which is what carries the hardness back
+to concrete groups. In unary the problem is tractable, by the
+very dynamic program of <code><a href="./Provenance/Algorithms/SumDP.html">Provenance.Algorithms.SumDP</a></code></li></ul><p><strong>Concrete m-semirings</strong> (<code>Provenance.Semirings.*</code>)</p><ul><li><code><a href="./Provenance/Semirings/Bool.html">Provenance.Semirings.Bool</a></code> – the Boolean m-semiring <code>𝔹</code></li><li><code><a href="./Provenance/Semirings/BoolFunc.html">Provenance.Semirings.BoolFunc</a></code> – the Boolean-function m-semiring <code>𝔹[X]</code></li><li><code><a href="./Provenance/Semirings/Why.html">Provenance.Semirings.Why</a></code> – the Why[X] m-semiring (sets of witness sets)</li><li><code><a href="./Provenance/Semirings/Which.html">Provenance.Semirings.Which</a></code> – the Which[X] m-semiring (lineage / Lin[X])</li><li><code><a href="./Provenance/Semirings/How.html">Provenance.Semirings.How</a></code> – the ℕ[X] m-semiring of multivariate
+polynomials; the universal provenance semiring</li><li><code><a href="./Provenance/Semirings/Nat.html">Provenance.Semirings.Nat</a></code> – the counting m-semiring <code>ℕ</code></li><li><code><a href="./Provenance/Semirings/Tropical.html">Provenance.Semirings.Tropical</a></code> – the tropical m-semiring (min-plus) over <code>ℕ ∪ {∞}</code>, <code>ℚ ∪ {∞}</code>, or
+<code>ℝ ∪ {∞}</code>; the <code>ℝ</code> instance is also used as a counterexample showing that the absorptive
+hypothesis of <code><a href="./Provenance/Having.html#Having.F_eq_S">Having.F_eq_S</a></code> and of the <code>MIN</code>/<code>MAX</code>/<code>PICKFIRST</code> scan collapses
+(<code><a href="./Provenance/Semirings/Tropical.html#TropicalR.minScan_ne_prov">TropicalR.minScan_ne_prov</a></code>) is genuinely required (idempotent + <code>⊗</code>-over-<code>⊖</code> distributive
+is not enough)</li><li><code><a href="./Provenance/Semirings/Viterbi.html">Provenance.Semirings.Viterbi</a></code> – the Viterbi m-semiring (max-times) over <code>[0,1]</code></li><li><code><a href="./Provenance/Semirings/MinMax.html">Provenance.Semirings.MinMax</a></code> – the min-max semiring over any bounded linear
+order (security / access control semiring and dual fuzzy semiring)</li><li><code><a href="./Provenance/Semirings/Lukasiewicz.html">Provenance.Semirings.Lukasiewicz</a></code> – the Łukasiewicz (fuzzy logic) m-semiring over <code>ℚ ∩ [0,1]</code></li><li><code><a href="./Provenance/Semirings/ChainFive.html">Provenance.Semirings.ChainFive</a></code> – a five-element chain m-semiring, absorptive but without
+<code>⊗</code>-over-<code>⊖</code> distributivity; witnesses that the distributivity hypothesis of
+<code><a href="./Provenance/Having.html#Having.world_bound">Having.world_bound</a></code> (hence of the <code>HAVING count =</code>/<code>≤</code> identities) is genuinely required</li><li><code><a href="./Provenance/Semirings/Interval.html">Provenance.Semirings.Interval</a></code>, <code><a href="./Provenance/Semirings/IntervalUnion.html">Provenance.Semirings.IntervalUnion</a></code> –
+intervals and finite unions of intervals over a dense linear order, used for
+temporal databases</li></ul><h2 id="Related-formalizations" class="markdown-heading">Related formalizations <a class="hover-link" href="#Related-formalizations">#</a></h2><p><a href="./references.html#ref_benzaken2021coq" title="Véronique Benzaken, Sarah Cohen-Boulakia, Evelyne Contejean, Chantal Keller, Rébecca Zucchini.
+A Coq formalization of data provenance.
+In Catalin Hritcu, Andrei Popescu, editors, CPP '21: 10th ACM SIGPLAN International Conference on Certified Programs and Proofs, Virtual Event, Denmark, January 17-19, 2021, 152–162. ACM, 2021.
+doi:10.1145/3437992.3439920, URL: https://doi.org/10.1145/3437992.3439920." id="_backref_10">Benzaken, Cohen-Boulakia, Contejean, Keller &amp; Zucchini</a>
+formalize K-relations in Coq/Rocq, for the <em>positive</em> relational algebra extended
+with a single top-level aggregate, and prove an adequacy theorem: at <code>K = ℕ</code>,
+the annotated semantics computes exactly the standard bag semantics of the
+relational algebra. Their positivity restriction is essential to that theorem:
+<code>ℕ</code>-adequacy fails as soon as monus-based difference interacts with duplicate
+elimination (<code><a href="./Provenance/QueryAdequacy.html#Nat.counterexample_diff_adequacy">Nat.counterexample_diff_adequacy</a></code> in
+<code><a href="./Provenance/QueryAdequacy.html">Provenance.QueryAdequacy</a></code>). This library covers the non-monotone m-semiring
+extension instead – monus difference, duplicate elimination, compositional
+aggregation – and therefore anchors correctness differently: through
+homomorphism commutation (<code><a href="./Provenance/QueryAnnotatedDatabaseHom.html">Provenance.QueryAnnotatedDatabaseHom</a></code>), the
+rewriting correctness theorems (<code><a href="./Provenance/QueryRewriting.html#Query.rewriting_valid">Query.rewriting_valid</a></code>,
+<code><a href="./Provenance/AggQueryClosure.html#AggQuery.rewritesTo_valid">AggQuery.rewritesTo_valid</a></code>), the possible-worlds adequacy of the
+Boolean-function annotated semantics (<code><a href="./Provenance/Probability.html#randomWorld_evaluateAnnotated">randomWorld_evaluateAnnotated</a></code> in
+<code><a href="./Provenance/Probability.html">Provenance.Probability</a></code>), and the data-part adequacy results of
+<code><a href="./Provenance/QueryAdequacy.html">Provenance.QueryAdequacy</a></code>. Conversely, this library
+does not treat NULL
+values, correlated subqueries, or a SQL surface syntax, which the Coq/Rocq
+development inherits from Datacert.</p><h2 id="References" class="markdown-heading">References <a class="hover-link" href="#References">#</a></h2><ul><li><a href="./references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
+Provenance semirings.
+In Leonid Libkin, editor, Proceedings of the Twenty-Sixth ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems, June 11-13, 2007, Beijing, China, 31–40. ACM, 2007.
+doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_11">Green, Karvounarakis &amp; Tannen, <em>Provenance Semirings</em></a></li><li><a href="./references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
+On database query languages for K-relations.
+J. Appl. Log., 8(2):173–185, 2010.
+doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_12">Geerts &amp; Poggi, <em>On database query languages for K-relations</em></a></li><li><a href="./references.html#ref_green2017provenance" title="Todd J. Green, Val Tannen.
+The Semiring Framework for Database Provenance.
+In Emanuel Sallinger, Jan Van den Bussche, Floris Geerts, editors, Proceedings of the 36th ACM SIGMOD-SIGACT-SIGAI Symposium on Principles of Database Systems, PODS 2017, Chicago, IL, USA, May 14-19, 2017, 93–99. ACM, 2017.
+doi:10.1145/3034786.3056125, URL: https://doi.org/10.1145/3034786.3056125." id="_backref_13">Green &amp; Tannen, <em>The Semiring Framework for Database Provenance</em></a></li><li><a href="./references.html#ref_sen2026provsql" title="Aryak Sen, Silviu Maniu, Pierre Senellart.
+ProvSQL: A General System for Keeping Track of the Provenance and Probability of Data.
+In Proc. IEEE 42nd International Conference on Data Engineering (ICDE), Montréal, Canada, May 2026. 2026.
+Also arXiv abs/2504.12058.
+URL: https://arxiv.org/abs/2504.12058." id="_backref_14">Sen et al., <em>ProvSQL: A General System for Keeping Track of the
+Provenance and Probability of Data</em></a></li><li><a href="./references.html#ref_benzaken2021coq" title="Véronique Benzaken, Sarah Cohen-Boulakia, Evelyne Contejean, Chantal Keller, Rébecca Zucchini.
+A Coq formalization of data provenance.
+In Catalin Hritcu, Andrei Popescu, editors, CPP '21: 10th ACM SIGPLAN International Conference on Certified Programs and Proofs, Virtual Event, Denmark, January 17-19, 2021, 152–162. ACM, 2021.
+doi:10.1145/3437992.3439920, URL: https://doi.org/10.1145/3437992.3439920." id="_backref_15">Benzaken, Cohen-Boulakia, Contejean, Keller &amp; Zucchini, <em>A Coq formalization
+of data provenance</em></a></li></ul></div></main>
 <nav class="nav"><iframe src="./navbar.html" class="navframe" frameBorder="0"></iframe></nav></body></html>

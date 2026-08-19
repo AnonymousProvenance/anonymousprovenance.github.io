@@ -1,0 +1,227 @@
+<html lang="en"><head><meta charset="UTF-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1"></meta><link rel="stylesheet" href=".././style.css"></link><link rel="icon" href=".././favicon.svg"></link><link rel="mask-icon" href=".././favicon.svg" color="#000000"></link><link rel="prefetch" href=".././/declarations/declaration-data.bmp" as="image"></link><title>DescriptiveComplexity.SecondOrderHornPull</title><script defer="true" src=".././mathjax-config.js"></script><script defer="true" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="true" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script>const SITE_ROOT=".././";</script><script>const MODULE_NAME="DescriptiveComplexity.SecondOrderHornPull";</script><script type="module" src=".././jump-src.js"></script><script type="module" src=".././search.js"></script><script type="module" src=".././expand-nav.js"></script><script type="module" src=".././how-about.js"></script><script type="module" src=".././instances.js"></script><script type="module" src=".././importedBy.js"></script></head><body><input id="nav_toggle" type="checkbox"></input><header><h1><label for="nav_toggle"></label><span>Documentation</span></h1><h2 class="header_filename break_within"><span class="name">DescriptiveComplexity</span>.<span class="name">SecondOrderHornPull</span></h2><form id="search_form"><input type="text" name="q" autocomplete="off"></input>&#32;<button id="search_button" onclick="javascript: form.action='.././search.html';">Search</button></form></header><nav class="internal_nav"><p><a href="#top">return to top</a></p><p class="gh_nav_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean">source</a></p><div class="imports"><details><summary>Imports</summary><ul><li><a href=".././Init.html">Init</a></li><li><a href=".././DescriptiveComplexity/OrderedComposition.html">DescriptiveComplexity.OrderedComposition</a></li><li><a href=".././DescriptiveComplexity/SecondOrderHorn.html">DescriptiveComplexity.SecondOrderHorn</a></li><li><a href=".././DescriptiveComplexity/SecondOrderPull.html">DescriptiveComplexity.SecondOrderPull</a></li></ul></details><details><summary>Imported by</summary><ul id="imported-by-DescriptiveComplexity.SecondOrderHornPull" class="imported-by-list"></ul></details></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.HornClause.pull"><span class="name">DescriptiveComplexity</span>.<span class="name">HornClause</span>.<span class="name">pull</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.HornClause.pull_holds"><span class="name">DescriptiveComplexity</span>.<span class="name">HornClause</span>.<span class="name">pull_holds</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.HornProgram.pull"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.HornProgram.pull_mem"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull_mem</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.HornProgram.pull_cases"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull_cases</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.HornProgram.pull_holds"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull_holds</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.exists_holds_pull"><span class="name">DescriptiveComplexity</span>.<span class="name">exists_holds_pull</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.SigmaSOHornDefinable.of_orderedReduction"><span class="name">DescriptiveComplexity</span>.<span class="name">SigmaSOHornDefinable</span>.<span class="name">of_orderedReduction</span></a></div><div class="nav_link"><a class="break_within" href="#DescriptiveComplexity.SigmaSOHornDefinable.of_foReduction"><span class="name">DescriptiveComplexity</span>.<span class="name">SigmaSOHornDefinable</span>.<span class="name">of_foReduction</span></a></div></nav><main>
+<div class="mod_doc"><h1 id="Pulling-SO-Horn-definability-back-through-an-interpretation" class="markdown-heading">Pulling SO-Horn definability back through an interpretation <a class="hover-link" href="#Pulling-SO-Horn-definability-back-through-an-interpretation">#</a></h1><p>SO-Horn definability is closed under (ordered) first-order reductions
+(<code><a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.SigmaSOHornDefinable.of_orderedReduction">DescriptiveComplexity.SigmaSOHornDefinable.of_orderedReduction</a></code>). This is what makes
+the fragment a <code><a href=".././DescriptiveComplexity/Complexity.html#DescriptiveComplexity.ComplexityClass">DescriptiveComplexity.ComplexityClass</a></code> – the class
+<code><a href=".././DescriptiveComplexity/Hierarchy.html#DescriptiveComplexity.PTIME">DescriptiveComplexity.PTIME</a></code> – rather than a mere definability predicate.</p><p>The closure is <em>not</em> an instance of the general pullback of
+<code><a href=".././DescriptiveComplexity/SecondOrderPull.html">DescriptiveComplexity.SecondOrderPull</a></code>, which only says that the pulled-back kernel is
+some first-order formula: here the pulled-back kernel has to stay <em>Horn</em>. It
+does, and for a structural reason worth stating, since it is exactly what the
+Horn condition is careful about: the condition constrains the occurrences of
+the <em>second-order</em> variables only, while an interpretation rewrites the
+<em>input-vocabulary</em> atoms – which live in the guard, where anything is allowed.
+Concretely, pulling a clause back through a <code>d</code>-dimensional interpretation
+with tag type <code>Tag</code>:</p><ul><li>the block is pulled as in <code><a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOBlock.pull">DescriptiveComplexity.SOBlock.pull</a></code>: an <code>n</code>-ary relation
+variable on <code>Tag × A^d</code> becomes one <code>(n·d)</code>-ary relation variable on <code>A</code> per
+<code>n</code>-tuple of tags;</li><li>a clause becomes one clause per assignment <code>t : <a href=".././Init/Prelude.html#Fin">Fin</a> k → Tag</code> of tags to its
+universally quantified variables (<code><a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornClause.pull">DescriptiveComplexity.HornClause.pull</a></code>), with the
+<code>k</code> variables replaced by <code>k · d</code> coordinates;</li><li>its guard becomes the ordinary formula pullback
+<code><a href=".././DescriptiveComplexity/Composition.html#DescriptiveComplexity.FOInterpretation.pull">DescriptiveComplexity.FOInterpretation.pull</a></code> at the tag assignment <code>t</code> – an arbitrary
+first-order formula, which is fine, guards being unconstrained;</li><li>each body and head atom becomes the atom of the corresponding pulled
+relation variable (<code><a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOAtom.pull">DescriptiveComplexity.SOAtom.pull</a></code>) – <em>still an atom</em>, which is
+what keeps the clause Horn.</li></ul><p>The one place the order is needed is that the guards of the target may mention
+it: the pullback interprets the target's order by the lexicographic order on
+tagged tuples (<code><a href=".././DescriptiveComplexity/OrderedComposition.html#DescriptiveComplexity.FOInterpretation.ordExtend">DescriptiveComplexity.FOInterpretation.ordExtend</a></code>), which is why the
+definability notion quantifies over ordered structures in the first place.</p></div><div class="mod_doc"><h3 id="Pulling-back-a-clause-and-a-program" class="markdown-heading">Pulling back a clause and a program <a class="hover-link" href="#Pulling-back-a-clause-and-a-program">#</a></h3></div><div class="decl" id="DescriptiveComplexity.HornClause.pull"><div class="def"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L60-L66">source</a></div><div class="decl_header"><span class="decl_kind">noncomputable def</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornClause.pull"><span class="name">DescriptiveComplexity</span>.<span class="name">HornClause</span>.<span class="name">pull</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Tag</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Mathlib/Data/Finite/Defs.html#Finite">Finite</a> <span class="fn">Tag</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">d</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">B</span> : <a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock">SOBlock</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">k</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">I</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation">FOInterpretation</a> <span class="fn">L₁</span> <span class="fn">L₂</span> <span class="fn">Tag</span> <span class="fn">d</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">c</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornClause">HornClause</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">t</span> : <span class="fn"><span class="fn"><a href=".././Init/Prelude.html#Fin">Fin</a> <span class="fn">k</span></span> → <span class="fn">Tag</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornClause">HornClause</a> <span class="fn">L₁</span> <span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOBlock.pull">SOBlock.pull</a> <span class="fn">Tag</span> <span class="fn">d</span> <span class="fn">B</span>)</span> (<span class="fn">k</span> <a href=".././Init/Prelude.html#HMul.hMul">*</a> <span class="fn">d</span>)</span></div></div><p>The pullback of a Horn clause at a tag assignment: guards pull back as
+formulas, atoms as atoms – so the result is again a Horn clause.</p><details><summary>Equations</summary><ul class="equations"><li class="equation">One or more equations did not get rendered due to their size.</li></ul></details><details id="instances-for-list-DescriptiveComplexity.HornClause.pull" class="instances-for-list"><summary>Instances For</summary><ul class="instances-for-enum"></ul></details></div></div><div class="decl" id="DescriptiveComplexity.HornClause.pull_holds"><div class="theorem"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L68-L85">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornClause.pull_holds"><span class="name">DescriptiveComplexity</span>.<span class="name">HornClause</span>.<span class="name">pull_holds</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Tag</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Mathlib/Data/Finite/Defs.html#Finite">Finite</a> <span class="fn">Tag</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">d</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">B</span> : <a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock">SOBlock</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">k</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">A</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn"><span class="fn">L₁</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.Structure">Structure</a></span> <span class="fn">A</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">I</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation">FOInterpretation</a> <span class="fn">L₁</span> <span class="fn">L₂</span> <span class="fn">Tag</span> <span class="fn">d</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">c</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornClause">HornClause</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">t</span> : <span class="fn"><span class="fn"><a href=".././Init/Prelude.html#Fin">Fin</a> <span class="fn">k</span></span> → <span class="fn">Tag</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">ρ</span> : <span class="fn"><span class="fn"><span class="fn">B</span>.<a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock.Assignment">Assignment</a></span> <span class="fn">(<span class="fn"><span class="fn">I</span>.<a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation.Map">Map</a></span> <span class="fn">A</span>)</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">w</span> : <span class="fn"><span class="fn"><a href=".././Init/Prelude.html#Fin">Fin</a> (<span class="fn">k</span> <a href=".././Init/Prelude.html#HMul.hMul">*</a> <span class="fn">d</span>)</span> → <span class="fn">A</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><span class="fn"><span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornClause.pull">pull</a> <span class="fn">I</span> <span class="fn">c</span> <span class="fn">t</span>)</span>.<a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornClause.Holds">Holds</a></span> <span class="fn">(<span class="fn"><span class="fn">B</span>.<a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOBlock.pullAssign">pullAssign</a></span> <span class="fn">ρ</span>)</span> <span class="fn">w</span></span> <a href=".././Init/Core.html#Iff">↔</a> <span class="fn"><span class="fn"><span class="fn">c</span>.<a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornClause.Holds">Holds</a></span> <span class="fn">ρ</span> <span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.tagVal">tagVal</a> <span class="fn">I</span> <span class="fn">t</span> <span class="fn">w</span>)</span></span></div></div></div></div><div class="decl" id="DescriptiveComplexity.HornProgram.pull"><div class="def"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L87-L91">source</a></div><div class="decl_header"><span class="decl_kind">noncomputable def</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Tag</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Mathlib/Data/Finite/Defs.html#Finite">Finite</a> <span class="fn">Tag</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">d</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">B</span> : <a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock">SOBlock</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">k</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">I</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation">FOInterpretation</a> <span class="fn">L₁</span> <span class="fn">L₂</span> <span class="fn">Tag</span> <span class="fn">d</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">prog</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram">HornProgram</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram">HornProgram</a> <span class="fn">L₁</span> <span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOBlock.pull">SOBlock.pull</a> <span class="fn">Tag</span> <span class="fn">d</span> <span class="fn">B</span>)</span> (<span class="fn">k</span> <a href=".././Init/Prelude.html#HMul.hMul">*</a> <span class="fn">d</span>)</span></div></div><p>The pullback of a Horn program: one clause per clause of the program and
+per assignment of tags to its universally quantified variables.</p><details><summary>Equations</summary><ul class="equations"><li class="equation">One or more equations did not get rendered due to their size.</li></ul></details><details id="instances-for-list-DescriptiveComplexity.HornProgram.pull" class="instances-for-list"><summary>Instances For</summary><ul class="instances-for-enum"></ul></details></div></div><div class="decl" id="DescriptiveComplexity.HornProgram.pull_mem"><div class="theorem"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L93-L97">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull_mem"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull_mem</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Tag</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Mathlib/Data/Finite/Defs.html#Finite">Finite</a> <span class="fn">Tag</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">d</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">B</span> : <a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock">SOBlock</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">k</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">I</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation">FOInterpretation</a> <span class="fn">L₁</span> <span class="fn">L₂</span> <span class="fn">Tag</span> <span class="fn">d</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">prog</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram">HornProgram</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">c</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornClause">HornClause</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">hc</span> : <span class="fn">c</span> <a href=".././Init/Prelude.html#Membership.mem">∈</a> <span class="fn">prog</span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">t</span> : <span class="fn"><span class="fn"><a href=".././Init/Prelude.html#Fin">Fin</a> <span class="fn">k</span></span> → <span class="fn">Tag</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornClause.pull">HornClause.pull</a> <span class="fn">I</span> <span class="fn">c</span> <span class="fn">t</span></span> <a href=".././Init/Prelude.html#Membership.mem">∈</a> <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull">pull</a> <span class="fn">I</span> <span class="fn">prog</span></span></div></div></div></div><div class="decl" id="DescriptiveComplexity.HornProgram.pull_cases"><div class="theorem"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L99-L105">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull_cases"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull_cases</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Tag</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Mathlib/Data/Finite/Defs.html#Finite">Finite</a> <span class="fn">Tag</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">d</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">B</span> : <a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock">SOBlock</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">k</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">I</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation">FOInterpretation</a> <span class="fn">L₁</span> <span class="fn">L₂</span> <span class="fn">Tag</span> <span class="fn">d</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">prog</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram">HornProgram</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">c'</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornClause">HornClause</a> <span class="fn">L₁</span> <span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOBlock.pull">SOBlock.pull</a> <span class="fn">Tag</span> <span class="fn">d</span> <span class="fn">B</span>)</span> (<span class="fn">k</span> <a href=".././Init/Prelude.html#HMul.hMul">*</a> <span class="fn">d</span>)</span>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">hc'</span> : <span class="fn">c'</span> <a href=".././Init/Prelude.html#Membership.mem">∈</a> <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull">pull</a> <span class="fn">I</span> <span class="fn">prog</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn">∃ <span class="fn">c</span> ∈ <span class="fn">prog</span>, <span class="fn">∃ (<span class="fn">t</span> : <span class="fn"><span class="fn"><a href=".././Init/Prelude.html#Fin">Fin</a> <span class="fn">k</span></span> → <span class="fn">Tag</span></span>), <span class="fn">c'</span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornClause.pull">HornClause.pull</a> <span class="fn">I</span> <span class="fn">c</span> <span class="fn">t</span></span></span></span></div></div></div></div><div class="mod_doc"><h3 id="Correctness-of-the-pullback" class="markdown-heading">Correctness of the pullback <a class="hover-link" href="#Correctness-of-the-pullback">#</a></h3></div><div class="decl" id="DescriptiveComplexity.HornProgram.pull_holds"><div class="theorem"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L114-L126">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull_holds"><span class="name">DescriptiveComplexity</span>.<span class="name">HornProgram</span>.<span class="name">pull_holds</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Tag</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Mathlib/Data/Finite/Defs.html#Finite">Finite</a> <span class="fn">Tag</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">d</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">B</span> : <a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock">SOBlock</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">k</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">A</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn"><span class="fn">L₁</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.Structure">Structure</a></span> <span class="fn">A</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">I</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation">FOInterpretation</a> <span class="fn">L₁</span> <span class="fn">L₂</span> <span class="fn">Tag</span> <span class="fn">d</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">prog</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram">HornProgram</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">ρ</span> : <span class="fn"><span class="fn"><span class="fn">B</span>.<a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock.Assignment">Assignment</a></span> <span class="fn">(<span class="fn"><span class="fn">I</span>.<a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation.Map">Map</a></span> <span class="fn">A</span>)</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><span class="fn"><span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull">pull</a> <span class="fn">I</span> <span class="fn">prog</span>)</span>.<a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram.Holds">Holds</a></span> <span class="fn">(<span class="fn"><span class="fn">B</span>.<a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOBlock.pullAssign">pullAssign</a></span> <span class="fn">ρ</span>)</span></span> <a href=".././Init/Core.html#Iff">↔</a> <span class="fn"><span class="fn"><span class="fn">prog</span>.<a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram.Holds">Holds</a></span> <span class="fn">ρ</span></span></div></div><p>An assignment satisfies a program on the interpreted structure iff its
+transfer satisfies the pulled program on the base structure.</p></div></div><div class="decl" id="DescriptiveComplexity.exists_holds_pull"><div class="theorem"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L128-L139">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.exists_holds_pull"><span class="name">DescriptiveComplexity</span>.<span class="name">exists_holds_pull</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Tag</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Mathlib/Data/Finite/Defs.html#Finite">Finite</a> <span class="fn">Tag</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">d</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">B</span> : <a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock">SOBlock</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">k</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">A</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn"><span class="fn">L₁</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.Structure">Structure</a></span> <span class="fn">A</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">I</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation">FOInterpretation</a> <span class="fn">L₁</span> <span class="fn">L₂</span> <span class="fn">Tag</span> <span class="fn">d</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">prog</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram">HornProgram</a> <span class="fn">L₂</span> <span class="fn">B</span> <span class="fn">k</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn">(∃ (<span class="fn">ρ</span> : <span class="fn"><span class="fn"><span class="fn">B</span>.<a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock.Assignment">Assignment</a></span> <span class="fn">(<span class="fn"><span class="fn">I</span>.<a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOInterpretation.Map">Map</a></span> <span class="fn">A</span>)</span></span>), <span class="fn"><span class="fn"><span class="fn">prog</span>.<a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram.Holds">Holds</a></span> <span class="fn">ρ</span></span>)</span> <a href=".././Init/Core.html#Iff">↔</a>   <span class="fn">∃ (<span class="fn">σ</span> : <span class="fn"><span class="fn"><span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderPull.html#DescriptiveComplexity.SOBlock.pull">SOBlock.pull</a> <span class="fn">Tag</span> <span class="fn">d</span> <span class="fn">B</span>)</span>.<a href=".././DescriptiveComplexity/SecondOrder.html#DescriptiveComplexity.SOBlock.Assignment">Assignment</a></span> <span class="fn">A</span></span>), <span class="fn"><span class="fn"><span class="fn">(<a href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.HornProgram.pull">HornProgram.pull</a> <span class="fn">I</span> <span class="fn">prog</span>)</span>.<a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.HornProgram.Holds">Holds</a></span> <span class="fn">σ</span></span></span></div></div><p><strong>The pullback is correct</strong>: the program is satisfiable on the interpreted
+structure iff its pullback is satisfiable on the base structure.</p></div></div><div class="mod_doc"><h3 id="Closure-under-reductions" class="markdown-heading">Closure under reductions <a class="hover-link" href="#Closure-under-reductions">#</a></h3></div><div class="decl" id="DescriptiveComplexity.SigmaSOHornDefinable.of_orderedReduction"><div class="theorem"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L149-L167">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.SigmaSOHornDefinable.of_orderedReduction"><span class="name">DescriptiveComplexity</span>.<span class="name">SigmaSOHornDefinable</span>.<span class="name">of_orderedReduction</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₁</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">P</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.DecisionProblem">DecisionProblem</a> <span class="fn">L₁</span></span>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Q</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.DecisionProblem">DecisionProblem</a> <span class="fn">L₂</span></span>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">f</span> : <span class="fn"><a href=".././DescriptiveComplexity/Ordered.html#DescriptiveComplexity.OrderedFOReduction">OrderedFOReduction</a> <span class="fn">P</span> <span class="fn">Q</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.SigmaSOHornDefinable">SigmaSOHornDefinable</a> <span class="fn">Q</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.SigmaSOHornDefinable">SigmaSOHornDefinable</a> <span class="fn">P</span></span></div></div><p><strong>SO-Horn definability is closed under ordered first-order reductions.</strong>
+The Horn shape survives the pullback because an interpretation only rewrites
+the input-vocabulary atoms, which live in the guards; the second-order atoms
+are merely re-indexed.</p></div></div><div class="decl" id="DescriptiveComplexity.SigmaSOHornDefinable.of_foReduction"><div class="theorem"><div class="gh_link"><a href="https://github.com/PierreSenellart/descriptive-complexity/blob/cb62e43e8138fd57c979d5e7b2fba18f677e1e28/DescriptiveComplexity/SecondOrderHornPull.lean#L169-L172">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././DescriptiveComplexity/SecondOrderHornPull.html#DescriptiveComplexity.SigmaSOHornDefinable.of_foReduction"><span class="name">DescriptiveComplexity</span>.<span class="name">SigmaSOHornDefinable</span>.<span class="name">of_foReduction</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">L₁ </span><span class="fn">L₂</span> : <a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language">FirstOrder.Language</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₂</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><span class="fn">L₁</span>.<a href=".././Mathlib/ModelTheory/Basic.html#FirstOrder.Language.IsRelational">IsRelational</a></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">P</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.DecisionProblem">DecisionProblem</a> <span class="fn">L₁</span></span>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">Q</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.DecisionProblem">DecisionProblem</a> <span class="fn">L₂</span></span>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">f</span> : <span class="fn"><a href=".././DescriptiveComplexity/Interpretation.html#DescriptiveComplexity.FOReduction">FOReduction</a> <span class="fn">P</span> <span class="fn">Q</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.SigmaSOHornDefinable">SigmaSOHornDefinable</a> <span class="fn">Q</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././DescriptiveComplexity/SecondOrderHorn.html#DescriptiveComplexity.SigmaSOHornDefinable">SigmaSOHornDefinable</a> <span class="fn">P</span></span></div></div><p>SO-Horn definability is closed under first-order reductions.</p></div></div></main>
+<nav class="nav"><iframe src=".././navbar.html" class="navframe" frameBorder="0"></iframe></nav></body></html>

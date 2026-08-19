@@ -1,0 +1,360 @@
+<html lang="en"><head><meta charset="UTF-8"></meta><meta name="viewport" content="width=device-width, initial-scale=1"></meta><link rel="stylesheet" href=".././style.css"></link><link rel="icon" href=".././favicon.svg"></link><link rel="mask-icon" href=".././favicon.svg" color="#000000"></link><link rel="prefetch" href=".././/declarations/declaration-data.bmp" as="image"></link><title>Provenance.QueryAnnotatedDatabaseHom</title><script defer="true" src=".././mathjax-config.js"></script><script defer="true" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="true" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script>const SITE_ROOT=".././";</script><script>const MODULE_NAME="Provenance.QueryAnnotatedDatabaseHom";</script><script type="module" src=".././jump-src.js"></script><script type="module" src=".././search.js"></script><script type="module" src=".././expand-nav.js"></script><script type="module" src=".././how-about.js"></script><script type="module" src=".././instances.js"></script><script type="module" src=".././importedBy.js"></script></head><body><input id="nav_toggle" type="checkbox"></input><header><h1><label for="nav_toggle"></label><span>Documentation</span></h1><h2 class="header_filename break_within"><span class="name">Provenance</span>.<span class="name">QueryAnnotatedDatabaseHom</span></h2><form id="search_form"><input type="text" name="q" autocomplete="off"></input>&#32;<button id="search_button" onclick="javascript: form.action='.././search.html';">Search</button></form></header><nav class="internal_nav"><p><a href="#top">return to top</a></p><p class="gh_nav_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean">source</a></p><div class="imports"><details><summary>Imports</summary><ul><li><a href=".././Init.html">Init</a></li><li><a href=".././Provenance/QueryAnnotatedDatabase.html">Provenance.QueryAnnotatedDatabase</a></li><li><a href=".././Provenance/QueryRewriting.html">Provenance.QueryRewriting</a></li></ul></details><details><summary>Imported by</summary><ul id="imported-by-Provenance.QueryAnnotatedDatabaseHom" class="imported-by-list"></ul></details></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.mapAnnotatedTuple"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedTuple</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.mapAnnotatedDatabase"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedDatabase</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.mapAnnotatedRelation_zero"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_zero</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.mapAnnotatedRelation_add"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_add</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.map_fst_mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">map_fst_mapAnnotatedRelation</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.map_snd_mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">map_snd_mapAnnotatedRelation</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.mapAnnotatedRelation_filter_fst"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_filter_fst</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.sum_filter_map_snd_mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">sum_filter_map_snd_mapAnnotatedRelation</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.mapAnnotatedRelation_filter"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_filter</span></a></div><div class="nav_link"><a class="break_within" href="#SemiringWithMonusHom.find_mapAnnotatedDatabase"><span class="name">SemiringWithMonusHom</span>.<span class="name">find_mapAnnotatedDatabase</span></a></div><div class="nav_link"><a class="break_within" href="#groupByKey_find_eq_filter_sum"><span class="name">groupByKey_find_eq_filter_sum</span></a></div><div class="nav_link"><a class="break_within" href="#Query.evaluateAnnotated_hom"><span class="name">Query</span>.<span class="name">evaluateAnnotated_hom</span></a></div></nav><main>
+<div class="mod_doc"><h1 id="Query-evaluation-commutes-with-m-semiring-homomorphisms" class="markdown-heading">Query evaluation commutes with m-semiring homomorphisms <a class="hover-link" href="#Query-evaluation-commutes-with-m-semiring-homomorphisms">#</a></h1><p>Given an m-semiring homomorphism <code>h : K → K'</code>, evaluating a (non-aggregation)
+query over an annotated database whose annotations have been pushed forward
+along <code>h</code> is the same as evaluating over the original database and then pushing
+the resulting relation forward along <code>h</code>:</p><pre><code>  evaluateAnnotated q (h ⋆ d) = h ⋆ evaluateAnnotated q d
+</code></pre><p>This is the formal counterpart to the “compile once, evaluate many”
+architecture of ProvSQL <a href=".././references.html#ref_sen2026provsql" title="Aryak Sen, Silviu Maniu, Pierre Senellart.
+ProvSQL: A General System for Keeping Track of the Provenance and Probability of Data.
+In Proc. IEEE 42nd International Conference on Data Engineering (ICDE), Montréal, Canada, May 2026. 2026.
+Also arXiv abs/2504.12058.
+URL: https://arxiv.org/abs/2504.12058." id="_backref_0">Sen et al.</a>: each semiring evaluator
+is the application of a (different) homomorphism to the same persistent
+provenance representation, and this theorem says going through the
+homomorphism on the input side and on the output side give the same answer.</p><p>The result is distinct from <code><a href=".././Provenance/Semirings/How.html#How.universal">How.universal</a></code>, which only proves <em>existence</em> of
+a homomorphism out of <code>ℕ[X]</code> and does not connect it to query evaluation.</p><p>(The persistent provenance representation is <em>not</em> literally an element of
+<code>ℕ[X]</code>. First, on the algebraic side, <code>ℕ[X]</code> is not the universal m-semiring
+(see <a href=".././references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
+On database query languages for K-relations.
+J. Appl. Log., 8(2):173–185, 2010.
+doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_1">Geerts &amp; Poggi, Example 10</a>, or <code><a href=".././Provenance/Semirings/How.html#How.not_universal_m">How.not_universal_m</a></code>
+in <code><a href=".././Provenance/Semirings/How.html">Provenance/Semirings/How.lean</a></code>), so it could not factor every m-semiring
+evaluation even if we restricted to the operators it supports. Second, on the
+implementation side, a provenance circuit has gate types that go beyond the
+semiring framework altogether: the δ operator for aggregation row
+provenance from <a href=".././references.html#ref_amsterdamer2011aggregate" title="Yael Amsterdamer, Daniel Deutch, Val Tannen.
+Provenance for aggregate queries.
+In Maurizio Lenzerini, Thomas Schwentick, editors, Proceedings of the 30th ACM SIGMOD-SIGACT-SIGART Symposium on Principles of Database Systems, PODS 2011, June 12-16, 2011, Athens, Greece, 153–164. ACM, 2011.
+doi:10.1145/1989284.1989302, URL: https://doi.org/10.1145/1989284.1989302." id="_backref_2">Amsterdamer, Deutch &amp; Tannen, <em>Provenance for aggregate
+queries</em></a>, HAVING-style comparison gates, and
+the K-semimodule construction for aggregate values. The commutation
+theorem here applies to the <code>RA⁺(\)</code> fragment that <em>is</em> purely m-semiring-
+valued; it neither covers nor speaks to those other gate types.)</p><p>For the positive fragment (<code><a href=".././Mathlib/Data/Rel.html#Rel">Rel</a></code>, <code>Proj</code>, <code>Sel</code>, <code><a href=".././Init/Prelude.html#Prod">Prod</a></code>, <code><a href=".././Init/Core.html#Sum">Sum</a></code>, <code>Dedup</code>), this
+is the content of <a href=".././references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
+Provenance semirings.
+In Leonid Libkin, editor, Proceedings of the Twenty-Sixth ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems, June 11-13, 2007, Beijing, China, 31–40. ACM, 2007.
+doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_3">Green, Karvounarakis &amp; Tannen, <em>Provenance Semirings</em>,
+Proposition 3.5</a>: for any commutative-semiring map
+<code>h : K → K'</code>, the transformation on <code>K</code>-relations commutes with every <code>RA⁺</code>
+query of one argument <em>if and only if</em> <code>h</code> is a semiring homomorphism. Note
+that Green et al. (and Geerts &amp; Poggi below) work with set semantics, in which
+a <code>K</code>-relation is a <em>function</em> <code>U-Tup → K</code> and union is defined pointwise by
+<code>(R₁ ∪ R₂)(t) = R₁(t) + R₂(t)</code>; deduplication-with-annotation-sum is therefore
+automatic. Our library works with <code><a href=".././Mathlib/Data/Multiset/Defs.html#Multiset">Multiset</a> (AnnotatedTuple T K n)</code> instead,
+so the deduplication step is exposed as a separate <code>Dedup</code> operator that
+explicitly sums duplicate-tuple annotations. The <code>Dedup</code> case below is the
+bookkeeping artifact of working in multiset semantics; it requires only that
+<code>h</code> respect <code>+</code>, not monus, and so still belongs to Green et al.'s
+proposition rather than to the difference extension below.</p><p>The genuine extension, covering <code>Diff</code> (the only case that requires monus),
+is <a href=".././references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
+On database query languages for K-relations.
+J. Appl. Log., 8(2):173–185, 2010.
+doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_4">Geerts &amp; Poggi, <em>On database query languages for K-relations</em>,
+Proposition 1</a>: for any m-semiring map <code>h : K → K'</code>, the
+transformation commutes with every <code>RA⁺(\)</code> query <em>if and only if</em> <code>h</code> is an
+<em>m-semiring</em> homomorphism (i.e., it preserves monus in addition to addition
+and multiplication). The <code>Diff</code> case of <code><a href=".././Provenance/QueryAnnotatedDatabaseHom.html#Query.evaluateAnnotated_hom">Query.evaluateAnnotated_hom</a></code>
+crucially uses <code><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a></code>'s <code><a href=".././Mathlib/Algebra/Group/Hom/Defs.html#map_sub">map_sub</a></code> field; this is the only
+case that goes beyond Green et al.'s setting.</p><p>Geerts &amp; Poggi also observe (<a href=".././references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
+On database query languages for K-relations.
+J. Appl. Log., 8(2):173–185, 2010.
+doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_5"><em>ibid.</em>, Example 10</a>) that
+<code>ℕ[X]</code> is <em>not</em> the universal m-semiring (the analog of Theorem 4.3 of
+<a href=".././references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
+Provenance semirings.
+In Leonid Libkin, editor, Proceedings of the Twenty-Sixth ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems, June 11-13, 2007, Beijing, China, 31–40. ACM, 2007.
+doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_6">Green et al.</a> fails for <code>RA⁺(\)</code>); hence this commutation
+theorem genuinely lives at the level of m-homomorphisms, and there is no
+single universal factorization through <code>ℕ[X]</code>.</p><h2 id="Main-definitions-and-results" class="markdown-heading">Main definitions and results <a class="hover-link" href="#Main-definitions-and-results">#</a></h2><ul><li><code><a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedTuple">SemiringWithMonusHom.mapAnnotatedTuple</a></code>, <code><a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></code>,
+<code><a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedDatabase">mapAnnotatedDatabase</a></code>: pointwise pushforward along the homomorphism.</li><li><code><a href=".././Provenance/QueryAnnotatedDatabaseHom.html#Query.evaluateAnnotated_hom">Query.evaluateAnnotated_hom</a></code>: the commutation theorem
+(<a href=".././references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
+Provenance semirings.
+In Leonid Libkin, editor, Proceedings of the Twenty-Sixth ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems, June 11-13, 2007, Beijing, China, 31–40. ACM, 2007.
+doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_7">Green et al., Proposition 3.5</a>,
+<a href=".././references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
+On database query languages for K-relations.
+J. Appl. Log., 8(2):173–185, 2010.
+doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_8">Geerts &amp; Poggi, Proposition 1</a>).</li></ul></div><div class="decl" id="SemiringWithMonusHom.mapAnnotatedTuple"><div class="def"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L92-L95">source</a></div><div class="decl_header"><span class="decl_kind">def</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedTuple"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedTuple</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T </span><span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">ta</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K'</span> <span class="fn">n</span></span></div></div><p>Push an annotated tuple forward along a semiring homomorphism: the data
+component is left untouched, the annotation is mapped through <code>h</code>.</p><details><summary>Equations</summary><ul class="equations"><li class="equation"><span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedTuple">mapAnnotatedTuple</a></span> <span class="fn">ta</span></span> <a href=".././Init/Prelude.html#Eq">=</a> <a href=".././Init/Prelude.html#Prod.mk">(</a><span class="fn"><span class="fn">ta</span>.1</span><a href=".././Init/Prelude.html#Prod.mk">,</a> <span class="fn"><span class="fn">(fun (<span class="fn">x</span> : <span class="fn">K</span>) =&gt; <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom.toRingHom">toRingHom</a></span> <span class="fn">x</span></span>)</span> <span class="fn"><span class="fn">ta</span>.2</span></span><a href=".././Init/Prelude.html#Prod.mk">)</a></li></ul></details><details id="instances-for-list-SemiringWithMonusHom.mapAnnotatedTuple" class="instances-for-list"><summary>Instances For</summary><ul class="instances-for-enum"></ul></details></div></div><div class="decl" id="SemiringWithMonusHom.mapAnnotatedRelation"><div class="def"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L97-L99">source</a></div><div class="decl_header"><span class="decl_kind">def</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T </span><span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">r</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K'</span> <span class="fn">n</span></span></div></div><p>Push an annotated relation forward along a semiring homomorphism.</p><details><summary>Equations</summary><ul class="equations"><li class="equation"><span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r</span></span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn"><a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedTuple">mapAnnotatedTuple</a></span> <span class="fn">r</span></span></li></ul></details><details id="instances-for-list-SemiringWithMonusHom.mapAnnotatedRelation" class="instances-for-list"><summary>Instances For</summary><ul class="instances-for-enum"></ul></details></div></div><div class="decl" id="SemiringWithMonusHom.mapAnnotatedDatabase"><div class="def"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L101-L103">source</a></div><div class="decl_header"><span class="decl_kind">def</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedDatabase"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedDatabase</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T </span><span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">d</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedDatabase">AnnotatedDatabase</a> <span class="fn">T</span> <span class="fn">K</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedDatabase">AnnotatedDatabase</a> <span class="fn">T</span> <span class="fn">K'</span></span></div></div><p>Push an annotated database forward along a semiring homomorphism.</p><details><summary>Equations</summary><ul class="equations"><li class="equation"><span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedDatabase">mapAnnotatedDatabase</a></span> <span class="fn">d</span></span> <a href=".././Init/Prelude.html#Eq">=</a>   <span class="fn"><a href=".././Init/Prelude.html#List.map">List.map</a> <span class="fn">(fun (<span class="fn">e</span> : <a href=".././Init/Prelude.html#String">String</a> <a href=".././Init/Prelude.html#Prod">×</a> <span class="fn">(<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>) × <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span></span>) =&gt; <a href=".././Init/Prelude.html#Prod.mk">(</a><span class="fn"><span class="fn">e</span>.1</span><a href=".././Init/Prelude.html#Prod.mk">,</a> <a href=".././Init/Core.html#Sigma.mk">⟨</a><span class="fn"><span class="fn"><span class="fn">e</span>.2</span>.<a href=".././Init/Core.html#Sigma.fst">fst</a></span>, <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn"><span class="fn"><span class="fn">e</span>.2</span>.<a href=".././Init/Core.html#Sigma.snd">snd</a></span></span><a href=".././Init/Core.html#Sigma.mk">⟩</a><a href=".././Init/Prelude.html#Prod.mk">)</a>)</span> <span class="fn">d</span></span></li></ul></details><details id="instances-for-list-SemiringWithMonusHom.mapAnnotatedDatabase" class="instances-for-list"><summary>Instances For</summary><ul class="instances-for-enum"></ul></details></div></div><div class="decl" id="SemiringWithMonusHom.mapAnnotatedRelation_zero"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L105-L107">source</a></div><div class="attributes">@[simp]</div>
+<div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation_zero"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_zero</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args"> :</span><div class="decl_type"><span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">0</span></span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn">0</span></div></div></div></div><div class="decl" id="SemiringWithMonusHom.mapAnnotatedRelation_add"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L109-L114">source</a></div><div class="attributes">@[simp]</div>
+<div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation_add"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_add</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">r₁ </span><span class="fn">r₂</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> (<span class="fn">r₁</span> <a href=".././Init/Prelude.html#HAdd.hAdd">+</a> <span class="fn">r₂</span>)</span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r₁</span></span> <a href=".././Init/Prelude.html#HAdd.hAdd">+</a> <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r₂</span></span></div></div></div></div><div class="decl" id="SemiringWithMonusHom.map_fst_mapAnnotatedRelation"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L116-L123">source</a></div><div class="attributes">@[simp]</div>
+<div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.map_fst_mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">map_fst_mapAnnotatedRelation</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">r</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <a href=".././Init/Prelude.html#Prod.fst">Prod.fst</a> <span class="fn">(<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r</span>)</span></span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn"><a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <a href=".././Init/Prelude.html#Prod.fst">Prod.fst</a> <span class="fn">r</span></span></div></div><p>The data side of an annotated relation is unaffected by the pushforward.</p></div></div><div class="decl" id="SemiringWithMonusHom.map_snd_mapAnnotatedRelation"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L125-L132">source</a></div><div class="attributes">@[simp]</div>
+<div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.map_snd_mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">map_snd_mapAnnotatedRelation</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">r</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <a href=".././Init/Prelude.html#Prod.snd">Prod.snd</a> <span class="fn">(<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r</span>)</span></span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn"><a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <span class="fn">(⇑<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom.toRingHom">toRingHom</a></span>)</span> <span class="fn">(<a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <a href=".././Init/Prelude.html#Prod.snd">Prod.snd</a> <span class="fn">r</span>)</span></span></div></div><p>Mapping the annotation side pushes the homomorphism through.</p></div></div><div class="decl" id="SemiringWithMonusHom.mapAnnotatedRelation_filter_fst"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L134-L155">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation_filter_fst"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_filter_fst</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">P</span> : <span class="fn"><span class="fn"><a href=".././Provenance/Database.html#Tuple">Tuple</a> <span class="fn">T</span> <span class="fn">n</span></span> → <a href=".././foundational_types.html">Prop</a></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidablePred">DecidablePred</a> <span class="fn">P</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">r</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a> <span class="fn">(fun (<span class="fn">ta</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K'</span> <span class="fn">n</span></span>) =&gt; <span class="fn"><span class="fn">P</span> <span class="fn"><span class="fn">ta</span>.1</span></span>)</span> <span class="fn">(<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r</span>)</span></span> <a href=".././Init/Prelude.html#Eq">=</a>   <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">(<a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a> <span class="fn">(fun (<span class="fn">ta</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>) =&gt; <span class="fn"><span class="fn">P</span> <span class="fn"><span class="fn">ta</span>.1</span></span>)</span> <span class="fn">r</span>)</span></span></div></div><p>Filtering by an <code>fst</code>-only predicate commutes with the pushforward.</p></div></div><div class="decl" id="SemiringWithMonusHom.sum_filter_map_snd_mapAnnotatedRelation"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L157-L176">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.sum_filter_map_snd_mapAnnotatedRelation"><span class="name">SemiringWithMonusHom</span>.<span class="name">sum_filter_map_snd_mapAnnotatedRelation</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">v</span> : <span class="fn"><a href=".././Provenance/Database.html#Tuple">Tuple</a> <span class="fn">T</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">r</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><span class="fn">(<a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <a href=".././Init/Prelude.html#Prod.snd">Prod.snd</a> <span class="fn">(<a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a> <span class="fn">(fun (<span class="fn">q</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K'</span> <span class="fn">n</span></span>) =&gt; <span class="fn"><span class="fn">q</span>.1</span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn">v</span>)</span> <span class="fn">(<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r</span>)</span>)</span>)</span>.<a href=".././Mathlib/Algebra/BigOperators/Group/Multiset/Defs.html#Multiset.sum">sum</a></span> <a href=".././Init/Prelude.html#Eq">=</a>   <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom.toRingHom">toRingHom</a></span> <span class="fn"><span class="fn">(<a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <a href=".././Init/Prelude.html#Prod.snd">Prod.snd</a> <span class="fn">(<a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a> <span class="fn">(fun (<span class="fn">q</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>) =&gt; <span class="fn"><span class="fn">q</span>.1</span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn">v</span>)</span> <span class="fn">r</span>)</span>)</span>.<a href=".././Mathlib/Algebra/BigOperators/Group/Multiset/Defs.html#Multiset.sum">sum</a></span></span></div></div><p>Annotation-side sum over the entries with a given first component commutes
+with the pushforward: it pulls out <code>h.toRingHom</code>.</p></div></div><div class="decl" id="SemiringWithMonusHom.mapAnnotatedRelation_filter"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L178-L200">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation_filter"><span class="name">SemiringWithMonusHom</span>.<span class="name">mapAnnotatedRelation_filter</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">φ</span> : <span class="fn"><a href=".././Provenance/Query.html#Selection">Selection</a> <span class="fn">T</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">r</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a> <span class="fn">(fun (<span class="fn">ta</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K'</span> <span class="fn">n</span></span>) =&gt; <span class="fn"><span class="fn"><span class="fn">φ</span>.<a href=".././Provenance/Query.html#Selection.eval">eval</a></span> <span class="fn"><span class="fn">ta</span>.1</span></span>)</span> <span class="fn">(<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">r</span>)</span></span> <a href=".././Init/Prelude.html#Eq">=</a>   <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">(<a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a> <span class="fn">(fun (<span class="fn">ta</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>) =&gt; <span class="fn"><span class="fn"><span class="fn">φ</span>.<a href=".././Provenance/Query.html#Selection.eval">eval</a></span> <span class="fn"><span class="fn">ta</span>.1</span></span>)</span> <span class="fn">r</span>)</span></span></div></div><p><code><a href=".././Provenance/Query.html#Selection.eval">Selection.eval</a></code> on the data side commutes with pushforward, in the form needed
+to interchange <code><a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a></code> and <code><a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></code> in the <code>Sel</code> case.</p></div></div><div class="decl" id="SemiringWithMonusHom.find_mapAnnotatedDatabase"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L202-L219">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.find_mapAnnotatedDatabase"><span class="name">SemiringWithMonusHom</span>.<span class="name">find_mapAnnotatedDatabase</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">s</span> : <a href=".././Init/Prelude.html#String">String</a>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">d</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedDatabase">AnnotatedDatabase</a> <span class="fn">T</span> <span class="fn">K</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedDatabase.find">AnnotatedDatabase.find</a> <span class="fn">n</span> <span class="fn">s</span> <span class="fn">(<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedDatabase">mapAnnotatedDatabase</a></span> <span class="fn">d</span>)</span></span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn"><a href=".././Init/Prelude.html#Option.map">Option.map</a> <span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">(<a href=".././Provenance/AnnotatedDatabase.html#AnnotatedDatabase.find">AnnotatedDatabase.find</a> <span class="fn">n</span> <span class="fn">s</span> <span class="fn">d</span>)</span></span></div></div><p><code>find</code> commutes with the database-level pushforward.</p></div></div><div class="decl" id="groupByKey_find_eq_filter_sum"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L223-L272">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#groupByKey_find_eq_filter_sum"><span class="name">groupByKey_find_eq_filter_sum</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">r</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedRelation">AnnotatedRelation</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">u</span> : <span class="fn"><a href=".././Provenance/Database.html#Tuple">Tuple</a> <span class="fn">T</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><span class="fn"><span class="fn">(<a href=".././Init/Prelude.html#Option.map">Option.map</a> <a href=".././Init/Prelude.html#Prod.snd">Prod.snd</a> <span class="fn">(<a href=".././Init/Data/List/Basic.html#List.find?">List.find?</a> <span class="fn">(fun (<span class="fn">x</span> : <span class="fn"><a href=".././Provenance/Database.html#Tuple">Tuple</a> <span class="fn">T</span> <span class="fn">n</span></span> <a href=".././Init/Prelude.html#Prod">×</a> <span class="fn">K</span>) =&gt; <span class="fn"><a href=".././Init/Prelude.html#Decidable.decide">decide</a> (<span class="fn"><span class="fn">x</span>.1</span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn">u</span>)</span>)</span> <span class="fn">↑<span class="fn">(<a href=".././Provenance/QueryAnnotatedDatabase.html#groupByKey">groupByKey</a> <span class="fn">r</span>)</span></span>)</span>)</span>.<a href=".././Init/Prelude.html#Option.getD">getD</a></span> <span class="fn">0</span></span> <a href=".././Init/Prelude.html#Eq">=</a>   <span class="fn"><span class="fn">(<a href=".././Mathlib/Data/Multiset/MapFold.html#Multiset.map">Multiset.map</a> <a href=".././Init/Prelude.html#Prod.snd">Prod.snd</a> <span class="fn">(<a href=".././Mathlib/Data/Multiset/Filter.html#Multiset.filter">Multiset.filter</a> <span class="fn">(fun (<span class="fn">p</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedTuple">AnnotatedTuple</a> <span class="fn">T</span> <span class="fn">K</span> <span class="fn">n</span></span>) =&gt; <span class="fn"><span class="fn">p</span>.1</span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn">u</span>)</span> <span class="fn">r</span>)</span>)</span>.<a href=".././Mathlib/Algebra/BigOperators/Group/Multiset/Defs.html#Multiset.sum">sum</a></span></div></div><p><code>find?</code> on <code><a href=".././Provenance/QueryAnnotatedDatabase.html#groupByKey">groupByKey</a></code>, projected to the value side, equals the semiring
+sum of the annotations at the chosen key. Bridges the <code><a href=".././Provenance/QueryAnnotatedDatabase.html#groupByKey">groupByKey</a></code>-based
+aggregation used in <code>evaluateAnnotated</code>'s <code>Diff</code> clause with the <code>filter</code>-based
+aggregation that <code><a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.sum_filter_map_snd_mapAnnotatedRelation">sum_filter_map_snd_mapAnnotatedRelation</a></code> reasons about.</p></div></div><div class="mod_doc"><h2 id="The-commutation-theorem" class="markdown-heading">The commutation theorem <a class="hover-link" href="#The-commutation-theorem">#</a></h2></div><div class="decl" id="Query.evaluateAnnotated_hom"><div class="theorem"><div class="gh_link"><a href="https://github.com/AnonymousProvenance/lean/blob/eea8ba1403f66aca639dba79935f655231575511/Provenance/QueryAnnotatedDatabaseHom.lean#L276-L391">source</a></div><div class="decl_header"><span class="decl_kind">theorem</span>
+<span class="decl_name"><a class="break_within" href=".././Provenance/QueryAnnotatedDatabaseHom.html#Query.evaluateAnnotated_hom"><span class="name">Query</span>.<span class="name">evaluateAnnotated_hom</span></a></span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">T</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/Util/ValueType.html#ValueType">ValueType</a> <span class="fn">T</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">K </span><span class="fn">K'</span> : <a href=".././foundational_types.html">Type</a>}</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonus">SemiringWithMonus</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K</span></span>]</span></span>
+</span><span class="impl_arg"><span class="decl_args">
+<span class="fn">[<span class="fn"><a href=".././Init/Prelude.html#DecidableEq">DecidableEq</a> <span class="fn">K'</span></span>]</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">h</span> : <span class="fn"><a href=".././Provenance/SemiringWithMonus.html#SemiringWithMonusHom">SemiringWithMonusHom</a> <span class="fn">K</span> <span class="fn">K'</span></span>)</span></span>
+<span class="impl_arg"><span class="decl_args">
+<span class="fn">{<span class="fn">n</span> : <a href=".././Init/Prelude.html#Nat">ℕ</a>}</span></span>
+</span><span class="decl_args">
+<span class="fn">(<span class="fn">q</span> : <span class="fn"><a href=".././Provenance/Query.html#Query">Query</a> <span class="fn">T</span> <span class="fn">n</span></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">hq</span> : <span class="fn"><span class="fn">q</span>.<a href=".././Provenance/Query.html#Query.source">source</a></span>)</span></span>
+<span class="decl_args">
+<span class="fn">(<span class="fn">d</span> : <span class="fn"><a href=".././Provenance/AnnotatedDatabase.html#AnnotatedDatabase">AnnotatedDatabase</a> <span class="fn">T</span> <span class="fn">K</span></span>)</span></span>
+<span class="decl_args"> :</span><div class="decl_type"><span class="fn"><span class="fn"><span class="fn">q</span>.<a href=".././Provenance/QueryAnnotatedDatabase.html#Query.evaluateAnnotated">evaluateAnnotated</a></span> <span class="fn">hq</span> <span class="fn">(<span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedDatabase">mapAnnotatedDatabase</a></span> <span class="fn">d</span>)</span></span> <a href=".././Init/Prelude.html#Eq">=</a> <span class="fn"><span class="fn"><span class="fn">h</span>.<a href=".././Provenance/QueryAnnotatedDatabaseHom.html#SemiringWithMonusHom.mapAnnotatedRelation">mapAnnotatedRelation</a></span> <span class="fn">(<span class="fn"><span class="fn">q</span>.<a href=".././Provenance/QueryAnnotatedDatabase.html#Query.evaluateAnnotated">evaluateAnnotated</a></span> <span class="fn">hq</span> <span class="fn">d</span>)</span></span></div></div><p><strong>Commutation of query evaluation with m-semiring homomorphisms.</strong> For an
+m-semiring homomorphism <code>h : K → K'</code>, evaluating a (non-aggregation) query on
+the pushed-forward annotated database equals pushing forward the result of
+evaluating on the original database.</p><p>This is the “if” direction of <a href=".././references.html#ref_green2007provenance" title="Todd J. Green, Gregory Karvounarakis, Val Tannen.
+Provenance semirings.
+In Leonid Libkin, editor, Proceedings of the Twenty-Sixth ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems, June 11-13, 2007, Beijing, China, 31–40. ACM, 2007.
+doi:10.1145/1265530.1265535, URL: https://doi.org/10.1145/1265530.1265535." id="_backref_9">Green, Karvounarakis &amp; Tannen, Proposition
+3.5</a> for the positive cases (<code><a href=".././Mathlib/Data/Rel.html#Rel">Rel</a></code>, <code>Proj</code>, <code>Sel</code>, <code><a href=".././Init/Prelude.html#Prod">Prod</a></code>,
+<code><a href=".././Init/Core.html#Sum">Sum</a></code>, <code>Dedup</code>), and of <a href=".././references.html#ref_geerts2010database" title="Floris Geerts, Antonella Poggi.
+On database query languages for K-relations.
+J. Appl. Log., 8(2):173–185, 2010.
+doi:10.1016/J.JAL.2009.09.001, URL: https://doi.org/10.1016/j.jal.2009.09.001." id="_backref_10">Geerts &amp; Poggi, Proposition 1</a>
+for the only case that needs monus (<code>Diff</code>). The <code>Dedup</code> case is the explicit
+form, in our multiset semantics, of the annotation-summing that is automatic
+in Green et al.'s set semantics; it still requires only that <code>h</code> respect <code>+</code>.
+The “only if” direction (that commutation forces <code>h</code> to be an m-hom) is not
+formalized here.</p><p>Aggregation (<code>Agg</code>) is excluded via the <code>source</code> precondition; see the comment
+on <code><a href=".././Provenance/QueryAnnotatedDatabase.html#Query.evaluateAnnotated">Query.evaluateAnnotated</a></code> for the underlying limitation.</p></div></div></main>
+<nav class="nav"><iframe src=".././navbar.html" class="navframe" frameBorder="0"></iframe></nav></body></html>
